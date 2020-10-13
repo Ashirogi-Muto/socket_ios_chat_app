@@ -3,7 +3,7 @@
 	archiveVersion = 1;
 	classes = {
 	};
-	objectVersion = 50;
+	objectVersion = 52;
 	objects = {
 
 /* Begin PBXBuildFile section */
@@ -14,6 +14,10 @@
 		9620557F2535415E00E0B575 /* Monash_Chat_Room.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = 9620557D2535415E00E0B575 /* Monash_Chat_Room.xcdatamodeld */; };
 		962055812535416200E0B575 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 962055802535416200E0B575 /* Assets.xcassets */; };
 		962055842535416200E0B575 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 962055822535416200E0B575 /* LaunchScreen.storyboard */; };
+		9620558E2535450A00E0B575 /* SocketIO in Frameworks */ = {isa = PBXBuildFile; productRef = 9620558D2535450A00E0B575 /* SocketIO */; };
+		9620559625354AA000E0B575 /* Constants.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9620559525354AA000E0B575 /* Constants.swift */; };
+		9620559925354DDD00E0B575 /* SocketHelper.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9620559825354DDD00E0B575 /* SocketHelper.swift */; };
+		9620559C253550EA00E0B575 /* SocketEvents.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9620559B253550EA00E0B575 /* SocketEvents.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -26,6 +30,9 @@
 		962055802535416200E0B575 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		962055832535416200E0B575 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		962055852535416200E0B575 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		9620559525354AA000E0B575 /* Constants.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Constants.swift; sourceTree = "<group>"; };
+		9620559825354DDD00E0B575 /* SocketHelper.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SocketHelper.swift; sourceTree = "<group>"; };
+		9620559B253550EA00E0B575 /* SocketEvents.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SocketEvents.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -33,6 +40,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				9620558E2535450A00E0B575 /* SocketIO in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -58,16 +66,43 @@
 		962055732535415E00E0B575 /* Monash Chat Room */ = {
 			isa = PBXGroup;
 			children = (
+				962055A22535642C00E0B575 /* View */,
+				962055A12535642400E0B575 /* Model */,
 				962055742535415E00E0B575 /* AppDelegate.swift */,
+				962055A0253563FF00E0B575 /* Controllers */,
 				962055762535415E00E0B575 /* SceneDelegate.swift */,
-				962055782535415E00E0B575 /* ViewController.swift */,
-				9620557A2535415E00E0B575 /* Main.storyboard */,
 				962055802535416200E0B575 /* Assets.xcassets */,
-				962055822535416200E0B575 /* LaunchScreen.storyboard */,
 				962055852535416200E0B575 /* Info.plist */,
-				9620557D2535415E00E0B575 /* Monash_Chat_Room.xcdatamodeld */,
 			);
 			path = "Monash Chat Room";
+			sourceTree = "<group>";
+		};
+		962055A0253563FF00E0B575 /* Controllers */ = {
+			isa = PBXGroup;
+			children = (
+				9620559B253550EA00E0B575 /* SocketEvents.swift */,
+				9620559825354DDD00E0B575 /* SocketHelper.swift */,
+				9620559525354AA000E0B575 /* Constants.swift */,
+				962055782535415E00E0B575 /* ViewController.swift */,
+			);
+			path = Controllers;
+			sourceTree = "<group>";
+		};
+		962055A12535642400E0B575 /* Model */ = {
+			isa = PBXGroup;
+			children = (
+				9620557D2535415E00E0B575 /* Monash_Chat_Room.xcdatamodeld */,
+			);
+			path = Model;
+			sourceTree = "<group>";
+		};
+		962055A22535642C00E0B575 /* View */ = {
+			isa = PBXGroup;
+			children = (
+				962055822535416200E0B575 /* LaunchScreen.storyboard */,
+				9620557A2535415E00E0B575 /* Main.storyboard */,
+			);
+			path = View;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -86,6 +121,9 @@
 			dependencies = (
 			);
 			name = "Monash Chat Room";
+			packageProductDependencies = (
+				9620558D2535450A00E0B575 /* SocketIO */,
+			);
 			productName = "Monash Chat Room";
 			productReference = 962055712535415E00E0B575 /* Monash Chat Room.app */;
 			productType = "com.apple.product-type.application";
@@ -113,6 +151,9 @@
 				Base,
 			);
 			mainGroup = 962055682535415D00E0B575;
+			packageReferences = (
+				9620558C2535450A00E0B575 /* XCRemoteSwiftPackageReference "socket" */,
+			);
 			productRefGroup = 962055722535415E00E0B575 /* Products */;
 			projectDirPath = "";
 			projectRoot = "";
@@ -140,7 +181,10 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				9620559925354DDD00E0B575 /* SocketHelper.swift in Sources */,
+				9620559625354AA000E0B575 /* Constants.swift in Sources */,
 				962055792535415E00E0B575 /* ViewController.swift in Sources */,
+				9620559C253550EA00E0B575 /* SocketEvents.swift in Sources */,
 				962055752535415E00E0B575 /* AppDelegate.swift in Sources */,
 				9620557F2535415E00E0B575 /* Monash_Chat_Room.xcdatamodeld in Sources */,
 				962055772535415E00E0B575 /* SceneDelegate.swift in Sources */,
@@ -345,6 +389,25 @@
 			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
+
+/* Begin XCRemoteSwiftPackageReference section */
+		9620558C2535450A00E0B575 /* XCRemoteSwiftPackageReference "socket" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/socketio/socket.io-client-swift";
+			requirement = {
+				kind = upToNextMajorVersion;
+				minimumVersion = 15.2.0;
+			};
+		};
+/* End XCRemoteSwiftPackageReference section */
+
+/* Begin XCSwiftPackageProductDependency section */
+		9620558D2535450A00E0B575 /* SocketIO */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 9620558C2535450A00E0B575 /* XCRemoteSwiftPackageReference "socket" */;
+			productName = SocketIO;
+		};
+/* End XCSwiftPackageProductDependency section */
 
 /* Begin XCVersionGroup section */
 		9620557D2535415E00E0B575 /* Monash_Chat_Room.xcdatamodeld */ = {
