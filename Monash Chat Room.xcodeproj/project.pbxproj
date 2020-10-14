@@ -18,6 +18,13 @@
 		9620559625354AA000E0B575 /* Constants.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9620559525354AA000E0B575 /* Constants.swift */; };
 		9620559925354DDD00E0B575 /* SocketHelper.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9620559825354DDD00E0B575 /* SocketHelper.swift */; };
 		9620559C253550EA00E0B575 /* SocketEvents.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9620559B253550EA00E0B575 /* SocketEvents.swift */; };
+		96411C112536984D003ED01D /* MessageKit in Frameworks */ = {isa = PBXBuildFile; productRef = 96411C102536984D003ED01D /* MessageKit */; };
+		96411C142536995C003ED01D /* ChatRoomController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 96411C132536995C003ED01D /* ChatRoomController.swift */; };
+		96411C1725369A59003ED01D /* UserChatRoomsTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 96411C1625369A59003ED01D /* UserChatRoomsTableViewController.swift */; };
+		96411C1A25369B0A003ED01D /* AllChatRoomsTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 96411C1925369B0A003ED01D /* AllChatRoomsTableViewController.swift */; };
+		96411C2025369D99003ED01D /* ChatRoomDetail.swift in Sources */ = {isa = PBXBuildFile; fileRef = 96411C1F25369D99003ED01D /* ChatRoomDetail.swift */; };
+		96411C232536A74C003ED01D /* AddNewRoomViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 96411C222536A74B003ED01D /* AddNewRoomViewController.swift */; };
+		96C128B52536C3A9001BBCCE /* Message.swift in Sources */ = {isa = PBXBuildFile; fileRef = 96C128B42536C3A9001BBCCE /* Message.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -33,6 +40,12 @@
 		9620559525354AA000E0B575 /* Constants.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Constants.swift; sourceTree = "<group>"; };
 		9620559825354DDD00E0B575 /* SocketHelper.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SocketHelper.swift; sourceTree = "<group>"; };
 		9620559B253550EA00E0B575 /* SocketEvents.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SocketEvents.swift; sourceTree = "<group>"; };
+		96411C132536995C003ED01D /* ChatRoomController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChatRoomController.swift; sourceTree = "<group>"; };
+		96411C1625369A59003ED01D /* UserChatRoomsTableViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserChatRoomsTableViewController.swift; sourceTree = "<group>"; };
+		96411C1925369B0A003ED01D /* AllChatRoomsTableViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AllChatRoomsTableViewController.swift; sourceTree = "<group>"; };
+		96411C1F25369D99003ED01D /* ChatRoomDetail.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChatRoomDetail.swift; sourceTree = "<group>"; };
+		96411C222536A74B003ED01D /* AddNewRoomViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddNewRoomViewController.swift; sourceTree = "<group>"; };
+		96C128B42536C3A9001BBCCE /* Message.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Message.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -41,6 +54,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				9620558E2535450A00E0B575 /* SocketIO in Frameworks */,
+				96411C112536984D003ED01D /* MessageKit in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -84,6 +98,10 @@
 				9620559825354DDD00E0B575 /* SocketHelper.swift */,
 				9620559525354AA000E0B575 /* Constants.swift */,
 				962055782535415E00E0B575 /* ViewController.swift */,
+				96411C132536995C003ED01D /* ChatRoomController.swift */,
+				96411C1625369A59003ED01D /* UserChatRoomsTableViewController.swift */,
+				96411C1925369B0A003ED01D /* AllChatRoomsTableViewController.swift */,
+				96411C222536A74B003ED01D /* AddNewRoomViewController.swift */,
 			);
 			path = Controllers;
 			sourceTree = "<group>";
@@ -92,6 +110,8 @@
 			isa = PBXGroup;
 			children = (
 				9620557D2535415E00E0B575 /* Monash_Chat_Room.xcdatamodeld */,
+				96411C1F25369D99003ED01D /* ChatRoomDetail.swift */,
+				96C128B42536C3A9001BBCCE /* Message.swift */,
 			);
 			path = Model;
 			sourceTree = "<group>";
@@ -123,6 +143,7 @@
 			name = "Monash Chat Room";
 			packageProductDependencies = (
 				9620558D2535450A00E0B575 /* SocketIO */,
+				96411C102536984D003ED01D /* MessageKit */,
 			);
 			productName = "Monash Chat Room";
 			productReference = 962055712535415E00E0B575 /* Monash Chat Room.app */;
@@ -153,6 +174,7 @@
 			mainGroup = 962055682535415D00E0B575;
 			packageReferences = (
 				9620558C2535450A00E0B575 /* XCRemoteSwiftPackageReference "socket" */,
+				96411C0F2536984C003ED01D /* XCRemoteSwiftPackageReference "MessageKit" */,
 			);
 			productRefGroup = 962055722535415E00E0B575 /* Products */;
 			projectDirPath = "";
@@ -183,8 +205,14 @@
 			files = (
 				9620559925354DDD00E0B575 /* SocketHelper.swift in Sources */,
 				9620559625354AA000E0B575 /* Constants.swift in Sources */,
+				96411C1A25369B0A003ED01D /* AllChatRoomsTableViewController.swift in Sources */,
 				962055792535415E00E0B575 /* ViewController.swift in Sources */,
+				96411C232536A74C003ED01D /* AddNewRoomViewController.swift in Sources */,
 				9620559C253550EA00E0B575 /* SocketEvents.swift in Sources */,
+				96411C1725369A59003ED01D /* UserChatRoomsTableViewController.swift in Sources */,
+				96411C142536995C003ED01D /* ChatRoomController.swift in Sources */,
+				96411C2025369D99003ED01D /* ChatRoomDetail.swift in Sources */,
+				96C128B52536C3A9001BBCCE /* Message.swift in Sources */,
 				962055752535415E00E0B575 /* AppDelegate.swift in Sources */,
 				9620557F2535415E00E0B575 /* Monash_Chat_Room.xcdatamodeld in Sources */,
 				962055772535415E00E0B575 /* SceneDelegate.swift in Sources */,
@@ -399,6 +427,14 @@
 				minimumVersion = 15.2.0;
 			};
 		};
+		96411C0F2536984C003ED01D /* XCRemoteSwiftPackageReference "MessageKit" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/MessageKit/MessageKit";
+			requirement = {
+				kind = upToNextMajorVersion;
+				minimumVersion = 3.4.2;
+			};
+		};
 /* End XCRemoteSwiftPackageReference section */
 
 /* Begin XCSwiftPackageProductDependency section */
@@ -406,6 +442,11 @@
 			isa = XCSwiftPackageProductDependency;
 			package = 9620558C2535450A00E0B575 /* XCRemoteSwiftPackageReference "socket" */;
 			productName = SocketIO;
+		};
+		96411C102536984D003ED01D /* MessageKit */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 96411C0F2536984C003ED01D /* XCRemoteSwiftPackageReference "MessageKit" */;
+			productName = MessageKit;
 		};
 /* End XCSwiftPackageProductDependency section */
 
