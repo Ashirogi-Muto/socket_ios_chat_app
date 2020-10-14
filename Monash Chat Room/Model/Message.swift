@@ -24,7 +24,7 @@ struct User {
 
 extension Message: MessageType {
     var sender: SenderType {
-        return Sender(senderId: user.senderId, displayName: user.name)
+        return Sender(senderId: user.senderId, displayName: "")
     }
     
     var messageId: String {
