@@ -16,32 +16,47 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
         // Use this method to optionally configure and attach the UIWindow `window` to the provided UIWindowScene `scene`.
         // If using a storyboard, the `window` property will automatically be initialized and attached to the scene.
         // This delegate does not imply the connecting scene or session are new (see `application:configurationForConnectingSceneSession` instead).
-        guard let winScene = (scene as? UIWindowScene) else { return }
+        guard let uiWindowScene = (scene as? UIWindowScene) else { return }
+        
         let userDefault = UserDefaults.standard
         let isUserLogedIn = userDefault.bool(forKey: Constants.USER_LOGGED_IN_DEFAULT_KEY)
         if !isUserLogedIn {
             // Create the root view controller as needed
-            let mainstoryboard: UIStoryboard = UIStoryboard(name: "Main", bundle: nil)
-            let vc: UIViewController = mainstoryboard.instantiateViewController(withIdentifier: "loginView") as! ViewController
-            let nc = UINavigationController(rootViewController: vc)
+            let viewController = intializeRootViewController(viewType: "login")
+            let navigationController = initlializeUINavigationController(viewController: viewController)
             
             // Create the window. Be sure to use this initializer and not the frame one.
-            let win = UIWindow(windowScene: winScene)
-            win.rootViewController = nc
-            win.makeKeyAndVisible()
-            window = win
+            let uiWindow = UIWindow(windowScene: uiWindowScene)
+            uiWindow.rootViewController = navigationController
+            uiWindow.makeKeyAndVisible()
+            window = uiWindow
         }
         else {
-            let mainstoryboard: UIStoryboard = UIStoryboard(name: "Main", bundle: nil)
-            let vc: UIViewController = mainstoryboard.instantiateViewController(withIdentifier: "userChatRoomView") as! UserChatRoomsTableViewController
-            let nc = UINavigationController(rootViewController: vc)
-            
-            // Create the window. Be sure to use this initializer and not the frame one.
-            let win = UIWindow(windowScene: winScene)
-            win.rootViewController = nc
-            win.makeKeyAndVisible()
-            window = win
+            let viewController = intializeRootViewController(viewType: "home")
+            let navigationController = initlializeUINavigationController(viewController: viewController)
+            let uiWindow = UIWindow(windowScene: uiWindowScene)
+            uiWindow.rootViewController = navigationController
+            uiWindow.makeKeyAndVisible()
+            window = uiWindow
         }
+    }
+    
+    func intializeRootViewController(viewType: String) -> UIViewController {
+        let mainstoryboard: UIStoryboard = UIStoryboard(name: "Main", bundle: nil)
+        let view: UIViewController
+        if viewType == "login" {
+            view = mainstoryboard.instantiateViewController(withIdentifier: Constants.LOGIN_VIEW_STORYBOARD_ID) as! ViewController
+        }
+        else {
+            view =  mainstoryboard.instantiateViewController(withIdentifier: Constants.USER_CHAT_ROOM_VIEW_STRORYBOARD_ID) as! UserChatRoomsTableViewController
+        }
+        return view
+    }
+    
+    func initlializeUINavigationController(viewController: UIViewController) -> UINavigationController {
+        let navigationController: UINavigationController
+        navigationController = UINavigationController(rootViewController: viewController)
+        return navigationController
     }
     
     func sceneDidDisconnect(_ scene: UIScene) {

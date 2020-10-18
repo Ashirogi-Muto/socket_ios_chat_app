@@ -17,5 +17,8 @@ struct Constants {
     static let SOCKET_URL = "http://localhost:3000"
     static let USER_CHAT_ROOMS_CELL_VIEW_IDENTIFIER = "userChatRoomCellView"
     static let USER_CHAT_ROOMS_TO_CHAT_ROOM_SEGUE_IDENTIFIER = "userChatRoomsToChatRoomSegue"
+    static let USER_CHAT_ROOM_VIEW_STRORYBOARD_ID = "userChatRoomView"
+    static let LOGIN_VIEW_STORYBOARD_ID = "loginView"
     static let USER_LOGGED_IN_DEFAULT_KEY = "isUserLogedIn"
+    static let MONASH_EMAIL_DOMAIN = "monash.edu"
 }
