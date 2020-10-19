@@ -12,13 +12,16 @@ class SocketHelper {
     static let shared = SocketHelper()
     var socketClient: SocketIOClient? = nil
     let manager = SocketManager(socketURL: URL(string: Constants.SOCKET_URL)!, config: [.log(false), .compress])
-    private init() {
+    var delegate: SocketConnectionDelegate?
+    public init() {
         socketClient = manager.defaultSocket
     }
     
     func connectToSocket() {
         socketClient?.on(clientEvent: .connect, callback: { (data, ack) in
             print("CONNECTED \(data)")
+            print("Calling delegate")
+            self.delegate?.connectedToSocket(isConnected: true)
         })
         socketClient?.connect()
     }
@@ -37,31 +40,49 @@ class SocketHelper {
     
     enum Events {
         case fetchAllMessages
+        case fetchAllRooms
+        case fetchAllRoomsError
+        case fetchUserRooms
+        case fetchUserRoomsError
         case receiveNewMessage
         var emitterName: String {
             switch self {
             case .fetchAllMessages:
                 return "fetchAllMessages"
+            case .fetchAllRooms:
+                return "fetchAllRooms"
+            case .fetchAllRoomsError:
+                return "fetchAllRoomsError"
             case .receiveNewMessage:
                 return "receiveNewMessage"
+            case .fetchUserRooms:
+                return "fetchUserRooms"
+            case .fetchUserRoomsError:
+                return "fetchUserRoomsError"
             }
         }
         var listnerName: String {
             switch self {
             case .fetchAllMessages:
                 return "fetchAllMessages"
+            case .fetchAllRooms:
+                return "receiveAllRooms"
+            case .fetchAllRoomsError:
+                return "fetchAllRoomsError"
+            case .fetchUserRooms:
+                return "receiveUserRooms"
+            case .fetchUserRoomsError:
+                return "fetchUserRoomsError"
             case .receiveNewMessage:
                 return "receiveNewMessage"
             }
         }
         func emit(params: [String : Any]) {
-            print("Emmiting \(emitterName)")
             SocketHelper.shared.socketClient?.emit(emitterName, params)
         }
         
         func listen(completion: @escaping (Any) -> Void) {
             SocketHelper.shared.socketClient?.on(listnerName) { (response, emitter) in
-                print("RES \(response)")
                 completion(response)
             }
         }

@@ -60,6 +60,7 @@ class ViewController: UIViewController, GIDSignInDelegate {
         do {
             try managedObjectContext?.save()
             userDefaults.set(true, forKey: Constants.USER_LOGGED_IN_DEFAULT_KEY)
+            userDefaults.set(email, forKey: Constants.LOGGED_IN_USER_EMAIL_KEY)
             let mainstoryboard: UIStoryboard = UIStoryboard(name: "Main", bundle: nil)
             let home = mainstoryboard.instantiateViewController(withIdentifier: Constants.USER_CHAT_ROOM_VIEW_STRORYBOARD_ID) as! UserChatRoomsTableViewController
             self.navigationController?.pushViewController(home, animated: true)
