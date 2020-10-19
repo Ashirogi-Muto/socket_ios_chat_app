@@ -11,8 +11,11 @@ import InputBarAccessoryView
 class ChatRoomController: MessagesViewController {
     var messages: [Message] = []
     var user: User!
+    var selectedRoomDetails: ChatRoomDetails?
+    
     override func viewDidLoad() {
         super.viewDidLoad()
+        self.title = selectedRoomDetails?.name ?? "No Room Name"
         user = User(senderId: UUID().uuidString, name: "Kshitij")
         messagesCollectionView.messagesDataSource = self
         messagesCollectionView.messagesLayoutDelegate = self

@@ -12,6 +12,7 @@
 		96039BE0253C097300393465 /* SocketConnectedProtcol.swift in Sources */ = {isa = PBXBuildFile; fileRef = 96039BDF253C097300393465 /* SocketConnectedProtcol.swift */; };
 		96039BE3253C0C8700393465 /* ChatRooms.swift in Sources */ = {isa = PBXBuildFile; fileRef = 96039BE2253C0C8700393465 /* ChatRooms.swift */; };
 		96039BE6253C0D1200393465 /* ChatRoomDetails.swift in Sources */ = {isa = PBXBuildFile; fileRef = 96039BE5253C0D1200393465 /* ChatRoomDetails.swift */; };
+		9606E281253DA08900E20560 /* FetchRoomsAPIResponseModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9606E280253DA08900E20560 /* FetchRoomsAPIResponseModel.swift */; };
 		962055752535415E00E0B575 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 962055742535415E00E0B575 /* AppDelegate.swift */; };
 		962055772535415E00E0B575 /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 962055762535415E00E0B575 /* SceneDelegate.swift */; };
 		962055792535415E00E0B575 /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 962055782535415E00E0B575 /* ViewController.swift */; };
@@ -39,6 +40,7 @@
 		96039BDF253C097300393465 /* SocketConnectedProtcol.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SocketConnectedProtcol.swift; sourceTree = "<group>"; };
 		96039BE2253C0C8700393465 /* ChatRooms.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChatRooms.swift; sourceTree = "<group>"; };
 		96039BE5253C0D1200393465 /* ChatRoomDetails.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChatRoomDetails.swift; sourceTree = "<group>"; };
+		9606E280253DA08900E20560 /* FetchRoomsAPIResponseModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FetchRoomsAPIResponseModel.swift; sourceTree = "<group>"; };
 		962055712535415E00E0B575 /* Monash Chat Room.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "Monash Chat Room.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		962055742535415E00E0B575 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		962055762535415E00E0B575 /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
@@ -140,6 +142,7 @@
 				96C128B42536C3A9001BBCCE /* Message.swift */,
 				96039BE2253C0C8700393465 /* ChatRooms.swift */,
 				96039BE5253C0D1200393465 /* ChatRoomDetails.swift */,
+				9606E280253DA08900E20560 /* FetchRoomsAPIResponseModel.swift */,
 			);
 			path = Model;
 			sourceTree = "<group>";
@@ -302,6 +305,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				9620559925354DDD00E0B575 /* SocketHelper.swift in Sources */,
+				9606E281253DA08900E20560 /* FetchRoomsAPIResponseModel.swift in Sources */,
 				9620559625354AA000E0B575 /* Constants.swift in Sources */,
 				96411C1A25369B0A003ED01D /* AllChatRoomsTableViewController.swift in Sources */,
 				962055792535415E00E0B575 /* ViewController.swift in Sources */,
