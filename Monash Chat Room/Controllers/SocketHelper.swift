@@ -38,12 +38,15 @@ class SocketHelper {
     enum Events {
         case fetchAllMessages
         case receiveNewMessage
+        case addNewRoom
         var emitterName: String {
             switch self {
             case .fetchAllMessages:
                 return "fetchAllMessages"
             case .receiveNewMessage:
                 return "receiveNewMessage"
+            case .addNewRoom:
+                return "newRoom"
             }
         }
         var listnerName: String {
@@ -52,6 +55,8 @@ class SocketHelper {
                 return "fetchAllMessages"
             case .receiveNewMessage:
                 return "receiveNewMessage"
+            case .addNewRoom:
+                return "newRoom"
             }
         }
         func emit(params: [String : Any]) {
