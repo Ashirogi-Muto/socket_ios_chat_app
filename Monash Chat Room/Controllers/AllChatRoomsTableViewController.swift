@@ -92,7 +92,6 @@ class AllChatRoomsTableViewController: UITableViewController, UISearchBarDelegat
     
     func fetchAllChatRooms() {
         let url = Constants.SOCKET_URL + Constants.FETCH_ALL_ROOMS_API_ROUTE
-        print(url)
         let finalUrl = URL(string: url)
         let task = URLSession.shared.dataTask(with: finalUrl!) { (data, response, error) in
             if error != nil {
