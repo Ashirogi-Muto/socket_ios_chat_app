@@ -7,16 +7,16 @@
 
 import UIKit
 
-class AllChatRoomsTableViewController: UITableViewController, UISearchBarDelegate, UITextFieldDelegate, UISearchResultsUpdating, SocketConnectionDelegate {
+class AllChatRoomsTableViewController: UITableViewController, UISearchBarDelegate, UITextFieldDelegate, UISearchResultsUpdating {
     
-    var allChatRooms:ChatRooms?
+    var allChatRooms: [ChatRoomDetails]?
     var filteredChatRooms: [ChatRoomDetails]?
     var loggedInUserEmail: String?
+    var selectedChatRoom: ChatRoomDetails?
+    var indicator = UIActivityIndicatorView()
+    
     override func viewDidLoad() {
         super.viewDidLoad()
-        let socketHelper = SocketHelper()
-        socketHelper.delegate = self
-        socketHelper.connectToSocket()
         let userDefault = UserDefaults.standard
         loggedInUserEmail = userDefault.string(forKey: Constants.LOGGED_IN_USER_EMAIL_KEY)
         let searchController = UISearchController(searchResultsController: nil)
@@ -25,6 +25,13 @@ class AllChatRoomsTableViewController: UITableViewController, UISearchBarDelegat
         searchController.searchBar.placeholder = "Search by Name or Tag"
         navigationItem.searchController = searchController
         tableView.tableFooterView = UIView()
+        indicator.style = UIActivityIndicatorView.Style.large
+        indicator.center = view.center
+        indicator.hidesWhenStopped = true
+        indicator.backgroundColor = UIColor.clear
+        view.addSubview(indicator)
+        indicator.startAnimating()
+        fetchAllChatRooms()
     }
     
     // MARK: - Table view data source
@@ -35,13 +42,13 @@ class AllChatRoomsTableViewController: UITableViewController, UISearchBarDelegat
             numberOfSections = 1
         }
         else {
-            let noDataLabel: UILabel  = UILabel(frame: CGRect(x: 0, y: 0, width: tableView.bounds.size.width, height: tableView.bounds.size.height))
-            noDataLabel.numberOfLines = 0
-            noDataLabel.text = Constants.NO_ROOMS_LABEL
-            noDataLabel.textColor = Constants.LABEL_COLOR
-            noDataLabel.textAlignment = .center
-            tableView.backgroundView  = noDataLabel
-            tableView.separatorStyle  = .none
+//            let noDataLabel: UILabel  = UILabel(frame: CGRect(x: 0, y: 0, width: tableView.bounds.size.width, height: tableView.bounds.size.height))
+//            noDataLabel.numberOfLines = 0
+//            noDataLabel.text = Constants.NO_ROOMS_LABEL
+//            noDataLabel.textColor = Constants.LABEL_COLOR
+//            noDataLabel.textAlignment = .center
+//            tableView.backgroundView  = noDataLabel
+//            tableView.separatorStyle  = .none
         }
         return numberOfSections
     }
@@ -58,6 +65,10 @@ class AllChatRoomsTableViewController: UITableViewController, UISearchBarDelegat
         return cell
     }
     
+    override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+        selectedChatRoom = filteredChatRooms![indexPath.row]
+    }
+    
     func updateSearchResults(for searchController: UISearchController) {
         guard let searchText = searchController.searchBar.text?.lowercased() else {
          return
@@ -65,48 +76,56 @@ class AllChatRoomsTableViewController: UITableViewController, UISearchBarDelegat
         let searchTextLowercased = searchText.lowercased()
         searchController.resignFirstResponder()
         if(searchText.count > 0) {
-            filteredChatRooms = allChatRooms?.rooms.filter({ (room: ChatRoomDetails) -> Bool in
+            filteredChatRooms = allChatRooms!.filter({ (room: ChatRoomDetails) -> Bool in
                 return (room.name.lowercased().contains(searchTextLowercased) || (room.tag.lowercased().contains(searchTextLowercased)))
             })
         }
         else {
-            filteredChatRooms = allChatRooms?.rooms
+            filteredChatRooms = allChatRooms!
         }
         tableView.reloadData()
     }
     
-    func emitFetchAllRoomsEvent() {
-        SocketHelper.Events.fetchAllRooms.emit(params: ["userId" : loggedInUserEmail])
-    }
+//    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
+//        <#code#>
+//    }
     
-    func initalizeAllRoomsListeners() {
-        SocketHelper.Events.fetchAllRooms.listen { (data) in
-            do {
-                if let arr = data as? [[String: Any]] {
-                    let roomDataJson = try JSONSerialization.data(withJSONObject: arr[0])
-                    let roomsData = try JSONDecoder().decode(ChatRooms.self, from: roomDataJson)
-                    if roomsData.userId == self.loggedInUserEmail {
-                        self.allChatRooms = roomsData
-                        self.filteredChatRooms = self.allChatRooms?.rooms
+    func fetchAllChatRooms() {
+        let url = Constants.SOCKET_URL + Constants.FETCH_ALL_ROOMS_API_ROUTE
+        let finalUrl = URL(string: url)
+        let task = URLSession.shared.dataTask(with: finalUrl!) { (data, response, error) in
+            if error != nil {
+                DispatchQueue.main.async {
+                    self.indicator.stopAnimating()
+                    self.showAlert(title: "Error", message: "Could not fetch all the rooms! Please try again.", actionTitle: "Ok")
+                }
+                return
+            }
+            if let safeData = data {
+                let decoder = JSONDecoder()
+                do {
+                    let responseData = try decoder.decode(FetchRoomsAPIResponse.self, from: safeData)
+                    DispatchQueue.main.async {
+                        self.allChatRooms = responseData.result.rooms
+                        self.filteredChatRooms = self.allChatRooms
+                        self.indicator.stopAnimating()
                         self.tableView.reloadData()
                     }
-                }
-            } catch let error {
-                print("ERROR IN <><><><initalizeAllRoomsListeners \(error.localizedDescription)")
-            }
-        }
-        
-        SocketHelper.Events.fetchUserRoomsError.listen { (data) in
-            if let arr = data as? [[String: Any]] {
-                if let userId = arr[0]["userId"] as? String {
-                    print("ERROR IN fetchUserRooms \(userId)")
+                } catch {
+                    DispatchQueue.main.async {
+                        self.indicator.stopAnimating()
+                        self.showAlert(title: "Error", message: "Could not fetch all the rooms! Please try again.", actionTitle: "Ok")
+                    }
                 }
             }
         }
-        emitFetchAllRoomsEvent()
+        task.resume()
     }
     
-    func connectedToSocket(isConnected: Bool) {
-        initalizeAllRoomsListeners()
+    func showAlert(title: String, message: String, actionTitle: String) {
+        let alertAction = UIAlertAction(title: actionTitle, style: .default, handler: nil)
+        let alert = UIAlertController(title: title, message: message, preferredStyle: .alert)
+        alert.addAction(alertAction)
+        present(alert, animated: true, completion: nil)
     }
 }
