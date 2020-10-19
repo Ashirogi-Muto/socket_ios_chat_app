@@ -14,11 +14,15 @@ class AddNewRoomViewController: UIViewController {
     @IBOutlet weak var addNewRoomButton: UIButton!
     @IBOutlet weak var nameErrorMessageLabel: UILabel!
     @IBOutlet weak var tagErrorMessageLabel: UILabel!
+    var indicator = UIActivityIndicatorView()
     override func viewDidLoad() {
         super.viewDidLoad()
         addNewRoomButton.layer.cornerRadius = 5
         nameErrorMessageLabel.isHidden = true
         tagErrorMessageLabel.isHidden = true
+        indicator.style = UIActivityIndicatorView.Style.medium
+        indicator.center = self.view.center
+        view.addSubview(indicator)
         // Do any additional setup after loading the view.
     }
     
@@ -28,13 +32,16 @@ class AddNewRoomViewController: UIViewController {
         let validation = inputValidation()
         if validation == true{
             
-     
+            indicator.startAnimating()
+            indicator.backgroundColor = UIColor.clear
             //
             print("validated")
             // SocketHelper.Events.addNewRoom.emit(params: ["name": roomNameInput.text!, "tag": roomTagInput.text!, "userId": "kpan0021@student.monash.edu"])
             
         } else{
             popUpMessage()
+            indicator.stopAnimating()
+            self.indicator.hidesWhenStopped = true
         }
     }
     
