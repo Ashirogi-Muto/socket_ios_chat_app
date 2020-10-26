@@ -17,6 +17,7 @@ class UserChatRoomsTableViewController: UITableViewController, UISearchBarDelega
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        SocketHelper.shared.connectToSocket()
         let searchController = UISearchController(searchResultsController: nil)
         searchController.searchResultsUpdater = self
         searchController.obscuresBackgroundDuringPresentation = false

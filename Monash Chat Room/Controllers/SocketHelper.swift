@@ -40,41 +40,27 @@ class SocketHelper {
     
     enum Events {
         case fetchAllMessages
-        case fetchAllRooms
-        case fetchAllRoomsError
-        case fetchUserRooms
-        case fetchUserRoomsError
+        
         case receiveNewMessage
+       
         var emitterName: String {
             switch self {
             case .fetchAllMessages:
                 return "fetchAllMessages"
-            case .fetchAllRooms:
-                return "fetchAllRooms"
-            case .fetchAllRoomsError:
-                return "fetchAllRoomsError"
+            
             case .receiveNewMessage:
                 return "receiveNewMessage"
-            case .fetchUserRooms:
-                return "fetchUserRooms"
-            case .fetchUserRoomsError:
-                return "fetchUserRoomsError"
+            
             }
         }
         var listnerName: String {
             switch self {
             case .fetchAllMessages:
                 return "fetchAllMessages"
-            case .fetchAllRooms:
-                return "receiveAllRooms"
-            case .fetchAllRoomsError:
-                return "fetchAllRoomsError"
-            case .fetchUserRooms:
-                return "receiveUserRooms"
-            case .fetchUserRoomsError:
-                return "fetchUserRoomsError"
+
             case .receiveNewMessage:
                 return "receiveNewMessage"
+            
             }
         }
         func emit(params: [String : Any]) {
