@@ -84,6 +84,7 @@ class UserChatRoomsTableViewController: UITableViewController, UISearchBarDelega
     }
     
     override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+        selectedChatRoom = filteredChatRooms![indexPath.row]
         performSegue(withIdentifier: Constants.USER_CHAT_ROOMS_TO_CHAT_ROOM_SEGUE_IDENTIFIER, sender: self)
     }
     
@@ -95,16 +96,7 @@ class UserChatRoomsTableViewController: UITableViewController, UISearchBarDelega
             destination.selectedRoomDetails = selectedChatRoom
         }
     }
-    
-    func getManagedobjectContext() -> NSManagedObjectContext? {
-        guard let appDelegate = UIApplication.shared.delegate as? AppDelegate
-        else {
-            return nil
-        }
-        let managedObjectContext = appDelegate.persistentContainer.viewContext
-        return managedObjectContext
-    }
-    
+
     func fetchUserChatRooms() {
         let url = Constants.SOCKET_URL + Constants.FETCH_USER_ROOMS_API_ROUTE + "/" + loggedInUserEmail!
         let finalUrl = URL(string: url)
