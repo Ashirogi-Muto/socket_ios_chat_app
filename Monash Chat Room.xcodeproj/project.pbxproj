@@ -24,12 +24,14 @@
 		9620559625354AA000E0B575 /* Constants.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9620559525354AA000E0B575 /* Constants.swift */; };
 		9620559925354DDD00E0B575 /* SocketHelper.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9620559825354DDD00E0B575 /* SocketHelper.swift */; };
 		9620559C253550EA00E0B575 /* SocketEvents.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9620559B253550EA00E0B575 /* SocketEvents.swift */; };
+		9638DC10253EA37E0050E326 /* FetcRoomMessagesAPIResponseModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9638DC0F253EA37E0050E326 /* FetcRoomMessagesAPIResponseModel.swift */; };
 		96411C112536984D003ED01D /* MessageKit in Frameworks */ = {isa = PBXBuildFile; productRef = 96411C102536984D003ED01D /* MessageKit */; };
 		96411C142536995C003ED01D /* ChatRoomController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 96411C132536995C003ED01D /* ChatRoomController.swift */; };
 		96411C1725369A59003ED01D /* UserChatRoomsTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 96411C1625369A59003ED01D /* UserChatRoomsTableViewController.swift */; };
 		96411C1A25369B0A003ED01D /* AllChatRoomsTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 96411C1925369B0A003ED01D /* AllChatRoomsTableViewController.swift */; };
 		96411C232536A74C003ED01D /* AddNewRoomViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 96411C222536A74B003ED01D /* AddNewRoomViewController.swift */; };
 		96C128B52536C3A9001BBCCE /* Message.swift in Sources */ = {isa = PBXBuildFile; fileRef = 96C128B42536C3A9001BBCCE /* Message.swift */; };
+		96F43C9A25482F9B00B1B970 /* SwiftDate in Frameworks */ = {isa = PBXBuildFile; productRef = 96F43C9925482F9B00B1B970 /* SwiftDate */; };
 		FE85CA111D704CFEA7730CFD /* Pods_Monash_Chat_Room.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = F2C6A8C45F9F4A6A2353FC66 /* Pods_Monash_Chat_Room.framework */; };
 /* End PBXBuildFile section */
 
@@ -53,6 +55,7 @@
 		9620559525354AA000E0B575 /* Constants.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Constants.swift; sourceTree = "<group>"; };
 		9620559825354DDD00E0B575 /* SocketHelper.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SocketHelper.swift; sourceTree = "<group>"; };
 		9620559B253550EA00E0B575 /* SocketEvents.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SocketEvents.swift; sourceTree = "<group>"; };
+		9638DC0F253EA37E0050E326 /* FetcRoomMessagesAPIResponseModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FetcRoomMessagesAPIResponseModel.swift; sourceTree = "<group>"; };
 		96411C132536995C003ED01D /* ChatRoomController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChatRoomController.swift; sourceTree = "<group>"; };
 		96411C1625369A59003ED01D /* UserChatRoomsTableViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserChatRoomsTableViewController.swift; sourceTree = "<group>"; };
 		96411C1925369B0A003ED01D /* AllChatRoomsTableViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AllChatRoomsTableViewController.swift; sourceTree = "<group>"; };
@@ -67,6 +70,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				96F43C9A25482F9B00B1B970 /* SwiftDate in Frameworks */,
 				9620558E2535450A00E0B575 /* SocketIO in Frameworks */,
 				96411C112536984D003ED01D /* MessageKit in Frameworks */,
 				FE85CA111D704CFEA7730CFD /* Pods_Monash_Chat_Room.framework in Frameworks */,
@@ -143,6 +147,7 @@
 				96039BE2253C0C8700393465 /* ChatRooms.swift */,
 				96039BE5253C0D1200393465 /* ChatRoomDetails.swift */,
 				9606E280253DA08900E20560 /* FetchRoomsAPIResponseModel.swift */,
+				9638DC0F253EA37E0050E326 /* FetcRoomMessagesAPIResponseModel.swift */,
 			);
 			path = Model;
 			sourceTree = "<group>";
@@ -186,6 +191,7 @@
 			packageProductDependencies = (
 				9620558D2535450A00E0B575 /* SocketIO */,
 				96411C102536984D003ED01D /* MessageKit */,
+				96F43C9925482F9B00B1B970 /* SwiftDate */,
 			);
 			productName = "Monash Chat Room";
 			productReference = 962055712535415E00E0B575 /* Monash Chat Room.app */;
@@ -217,6 +223,7 @@
 			packageReferences = (
 				9620558C2535450A00E0B575 /* XCRemoteSwiftPackageReference "socket" */,
 				96411C0F2536984C003ED01D /* XCRemoteSwiftPackageReference "MessageKit" */,
+				96F43C9825482F9B00B1B970 /* XCRemoteSwiftPackageReference "SwiftDate" */,
 			);
 			productRefGroup = 962055722535415E00E0B575 /* Products */;
 			projectDirPath = "";
@@ -307,6 +314,7 @@
 				9620559925354DDD00E0B575 /* SocketHelper.swift in Sources */,
 				9606E281253DA08900E20560 /* FetchRoomsAPIResponseModel.swift in Sources */,
 				9620559625354AA000E0B575 /* Constants.swift in Sources */,
+				9638DC10253EA37E0050E326 /* FetcRoomMessagesAPIResponseModel.swift in Sources */,
 				96411C1A25369B0A003ED01D /* AllChatRoomsTableViewController.swift in Sources */,
 				962055792535415E00E0B575 /* ViewController.swift in Sources */,
 				96411C232536A74C003ED01D /* AddNewRoomViewController.swift in Sources */,
@@ -543,6 +551,14 @@
 				minimumVersion = 3.4.2;
 			};
 		};
+		96F43C9825482F9B00B1B970 /* XCRemoteSwiftPackageReference "SwiftDate" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/malcommac/SwiftDate.git";
+			requirement = {
+				kind = upToNextMajorVersion;
+				minimumVersion = 6.2.0;
+			};
+		};
 /* End XCRemoteSwiftPackageReference section */
 
 /* Begin XCSwiftPackageProductDependency section */
@@ -555,6 +571,11 @@
 			isa = XCSwiftPackageProductDependency;
 			package = 96411C0F2536984C003ED01D /* XCRemoteSwiftPackageReference "MessageKit" */;
 			productName = MessageKit;
+		};
+		96F43C9925482F9B00B1B970 /* SwiftDate */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 96F43C9825482F9B00B1B970 /* XCRemoteSwiftPackageReference "SwiftDate" */;
+			productName = SwiftDate;
 		};
 /* End XCSwiftPackageProductDependency section */
 

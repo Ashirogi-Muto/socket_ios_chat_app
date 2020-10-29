@@ -45,6 +45,7 @@ class SocketHelper {
         case fetchUserRooms
         case fetchUserRoomsError
         case receiveNewMessage
+        case sendNewMessage
         var emitterName: String {
             switch self {
             case .fetchAllMessages:
@@ -59,6 +60,8 @@ class SocketHelper {
                 return "fetchUserRooms"
             case .fetchUserRoomsError:
                 return "fetchUserRoomsError"
+            case .sendNewMessage:
+                return "sendNewMessage"
             }
         }
         var listnerName: String {
@@ -75,6 +78,8 @@ class SocketHelper {
                 return "fetchUserRoomsError"
             case .receiveNewMessage:
                 return "receiveNewMessage"
+            case .sendNewMessage:
+                return "sendNewMessage"
             }
         }
         func emit(params: [String : Any]) {
