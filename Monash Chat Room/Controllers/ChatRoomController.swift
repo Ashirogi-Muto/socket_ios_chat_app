@@ -10,19 +10,21 @@ import MessageKit
 import InputBarAccessoryView
 import SwiftDate
 class ChatRoomController: MessagesViewController, SocketConnectionDelegate {
+    
     var messages: [Message] = []
     var user: User!
     var selectedRoomDetails: ChatRoomDetails?
     var indicator = UIActivityIndicatorView()
     var logedInUserEmail: String?
+    var userRoomIds: [String]?
     
     override func viewDidLoad() {
         super.viewDidLoad()
         let socketHelper = SocketHelper()
         socketHelper.delegate = self
-//        socketHelper.connectToSocket()
         let userDefault = UserDefaults.standard
         logedInUserEmail = userDefault.string(forKey: Constants.LOGGED_IN_USER_EMAIL_KEY)
+        userRoomIds = userDefault.stringArray(forKey: Constants.USER_ROOMS_IDS_KEY)
         self.title = selectedRoomDetails?.name ?? "No Room Name"
         user = User(senderId: logedInUserEmail!, name: logedInUserEmail!)
         messagesCollectionView.messagesDataSource = self
@@ -39,6 +41,60 @@ class ChatRoomController: MessagesViewController, SocketConnectionDelegate {
         indicator.startAnimating()
         fetchMessagesForTheRoom()
         initializeListenerForMessages()
+        doesUserBelongToTheRoom()
+    }
+    
+    func doesUserBelongToTheRoom() {
+        if checkIfUserRoomIdsKeyExist() == false {
+            fetchUserChatRooms()
+            makeUserJoinTheRoom()
+        }
+        else {
+            makeUserJoinTheRoom()
+        }
+    }
+    
+    func makeUserJoinTheRoom() {
+        if userRoomIds?.contains(selectedRoomDetails!.id) == false {
+            messageInputBar.sendButton.isEnabled = false
+            let alertJoinAction = UIAlertAction(title: "Join", style: .default) { _ in
+                self.saveUserToRoom()
+            }
+            let alertCancelAction = UIAlertAction(title: "Cancel", style: .default, handler: nil)
+            let alert = UIAlertController(title: "", message: "Looks like you have not joined this room yet!", preferredStyle: .alert)
+            alert.addAction(alertJoinAction)
+            alert.addAction(alertCancelAction)
+            present(alert, animated: true, completion: nil)
+        }
+    }
+    
+    func saveUserToRoom() {
+        indicator.startAnimating()
+        let url = Constants.SOCKET_URL + Constants.JOIN_ROOM_API_ROUTE + "/" + selectedRoomDetails!.id
+        let urlWithQuery = url + "?userEmail=" + logedInUserEmail!
+        print("URL \(urlWithQuery)")
+        let finalUrl = URL(string: urlWithQuery)
+        var request = URLRequest(url: finalUrl!)
+        request.httpMethod = "POST"
+
+        let task = URLSession.shared.dataTask(with: request) { (data, response, error) in
+            if error != nil {
+                print(error?.localizedDescription)
+                DispatchQueue.main.async {
+                    self.indicator.stopAnimating()
+                    self.showAlert(title: "Oop!", message: "Could not add you to this room! Please try again.", actionTitle: "Ok")
+                }
+            }
+            if let data = data, let dataString = String(data: data, encoding: .utf8) {
+                print("DATA \(dataString)")
+                DispatchQueue.main.async {
+                    self.indicator.stopAnimating()
+                    self.messageInputBar.sendButton.isEnabled = true
+                }
+            }
+            
+        }
+        task.resume()
     }
     
     func convertFetchedMessgesToMessageKitType(allMessages: [MessageDetails]) {
@@ -117,7 +173,37 @@ class ChatRoomController: MessagesViewController, SocketConnectionDelegate {
         }
     }
     
-    func connectedToSocket(isConnected: Bool) {
+    func fetchUserChatRooms() {
+        indicator.startAnimating()
+        let url = Constants.SOCKET_URL + Constants.FETCH_USER_ROOMS_API_ROUTE + "/" + logedInUserEmail!
+        let finalUrl = URL(string: url)
+        let task = URLSession.shared.dataTask(with: finalUrl!) { (data, response, error) in
+            if error != nil {
+                DispatchQueue.main.async {
+                    self.indicator.stopAnimating()
+                    self.showAlert(title: "Error", message: "Could not fetch your rooms! PLease try again.", actionTitle: "Ok")
+                }
+                return
+            }
+            if let safeData = data {
+                let decoder = JSONDecoder()
+                do {
+                    let responseData = try decoder.decode(FetchRoomsAPIResponse.self, from: safeData)
+                    DispatchQueue.main.async { [self] in
+                        let allRoomIds: [String] = responseData.result.rooms.map{ $0.id }
+                        let defaults = UserDefaults.standard
+                        defaults.set(allRoomIds, forKey: Constants.USER_ROOMS_IDS_KEY)
+                        self.indicator.stopAnimating()
+                    }
+                } catch {
+                    DispatchQueue.main.async {
+                        self.indicator.stopAnimating()
+                        self.showAlert(title: "Error", message: "Could not fetch your rooms! PLease try again.", actionTitle: "Ok")
+                    }
+                }
+            }
+        }
+        task.resume()
     }
     
     func showAlert(title: String, message: String, actionTitle: String) {
@@ -125,6 +211,13 @@ class ChatRoomController: MessagesViewController, SocketConnectionDelegate {
         let alert = UIAlertController(title: title, message: message, preferredStyle: .alert)
         alert.addAction(alertAction)
         present(alert, animated: true, completion: nil)
+    }
+    
+    func checkIfUserRoomIdsKeyExist() -> Bool {
+        return UserDefaults.standard.array(forKey: Constants.USER_ROOMS_IDS_KEY) != nil
+    }
+    
+    func connectedToSocket(isConnected: Bool) {
     }
 }
 

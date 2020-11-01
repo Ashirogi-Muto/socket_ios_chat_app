@@ -31,6 +31,9 @@ class UserChatRoomsTableViewController: UITableViewController, UISearchBarDelega
         indicator.hidesWhenStopped = true
         indicator.backgroundColor = UIColor.clear
         view.addSubview(indicator)
+    }
+    
+    override func viewWillAppear(_ animated: Bool) {
         indicator.startAnimating()
         fetchUserChatRooms()
     }
@@ -88,6 +91,41 @@ class UserChatRoomsTableViewController: UITableViewController, UISearchBarDelega
         performSegue(withIdentifier: Constants.USER_CHAT_ROOMS_TO_CHAT_ROOM_SEGUE_IDENTIFIER, sender: self)
     }
     
+    override func tableView(_ tableView: UITableView, commit editingStyle: UITableViewCell.EditingStyle, forRowAt indexPath: IndexPath) {
+        if editingStyle == .delete {
+            let selectedRoom = filteredChatRooms![indexPath.row]
+            removeUserFromRoom(id: selectedRoom.id)
+        }
+    }
+    
+    func removeUserFromRoom(id: String) {
+        indicator.startAnimating()
+        let url = Constants.SOCKET_URL + Constants.LEAVE_ROOM_API_ROUTE + "/" + id
+        let urlWithQuery = url + "?userEmail=" + loggedInUserEmail!
+        let finalUrl = URL(string: urlWithQuery)
+        var request = URLRequest(url: finalUrl!)
+        request.httpMethod = "POST"
+
+        let task = URLSession.shared.dataTask(with: request) { (data, response, error) in
+            if error != nil {
+                print(error?.localizedDescription)
+                DispatchQueue.main.async {
+                    self.indicator.stopAnimating()
+                    self.showAlert(title: "Oop!", message: "Could not remove you from this room! Please try again.", actionTitle: "Ok")
+                }
+            }
+            if let data = data, let dataString = String(data: data, encoding: .utf8) {
+                print("DATA \(dataString)")
+                DispatchQueue.main.async {
+                    self.indicator.stopAnimating()
+                    self.fetchUserChatRooms()
+                }
+            }
+            
+        }
+        task.resume()
+    }
+    
     // MARK: - Navigation
     
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
@@ -112,9 +150,12 @@ class UserChatRoomsTableViewController: UITableViewController, UISearchBarDelega
                 let decoder = JSONDecoder()
                 do {
                     let responseData = try decoder.decode(FetchRoomsAPIResponse.self, from: safeData)
-                    DispatchQueue.main.async {
+                    DispatchQueue.main.async { [self] in
                         self.userChatRooms = responseData.result.rooms
                         self.filteredChatRooms = self.userChatRooms
+                        let allRoomIds: [String] = (self.userChatRooms?.map{ $0.id })!
+                        let defaults = UserDefaults.standard
+                        defaults.set(allRoomIds, forKey: Constants.USER_ROOMS_IDS_KEY)
                         self.indicator.stopAnimating()
                         self.tableView.reloadData()
                     }

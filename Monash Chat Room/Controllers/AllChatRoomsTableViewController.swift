@@ -67,6 +67,7 @@ class AllChatRoomsTableViewController: UITableViewController, UISearchBarDelegat
     
     override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         selectedChatRoom = filteredChatRooms![indexPath.row]
+        performSegue(withIdentifier: Constants.ALL_ROOMS_TO_CHAT_ROOM_SEGUE_IDENTIFIER, sender: self)
     }
     
     func updateSearchResults(for searchController: UISearchController) {
@@ -86,9 +87,13 @@ class AllChatRoomsTableViewController: UITableViewController, UISearchBarDelegat
         tableView.reloadData()
     }
     
-//    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-//        <#code#>
-//    }
+    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
+        if segue.identifier == Constants.ALL_ROOMS_TO_CHAT_ROOM_SEGUE_IDENTIFIER {
+            let destination = segue.destination as! ChatRoomController
+            destination.selectedRoomDetails = selectedChatRoom
+        }
+          
+    }
     
     func fetchAllChatRooms() {
         let url = Constants.SOCKET_URL + Constants.FETCH_ALL_ROOMS_API_ROUTE

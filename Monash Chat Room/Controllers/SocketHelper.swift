@@ -20,7 +20,6 @@ class SocketHelper {
     func connectToSocket() {
         socketClient?.on(clientEvent: .connect, callback: { (data, ack) in
             print("CONNECTED \(data)")
-            print("Calling delegate")
             self.delegate?.connectedToSocket(isConnected: true)
         })
         socketClient?.connect()
