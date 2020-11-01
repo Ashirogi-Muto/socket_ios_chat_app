@@ -15,7 +15,7 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
         // If using a storyboard, the `window` property will automatically be initialized and attached to the scene.
         // This delegate does not imply the connecting scene or session are new (see `application:configurationForConnectingSceneSession` instead).
         guard let uiWindowScene = (scene as? UIWindowScene) else { return }
-        
+        window?.tintColor = Constants.PRIMARY_APP_COLOR
         let userDefault = UserDefaults.standard
         let isUserLogedIn = userDefault.bool(forKey: Constants.USER_LOGGED_IN_DEFAULT_KEY)
         if !isUserLogedIn {

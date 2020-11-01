@@ -98,6 +98,10 @@ class UserChatRoomsTableViewController: UITableViewController, UISearchBarDelega
         }
     }
     
+    override func tableView(_ tableView: UITableView, titleForDeleteConfirmationButtonForRowAt indexPath: IndexPath) -> String? {
+         return "Leave Room"
+    }
+    
     func removeUserFromRoom(id: String) {
         indicator.startAnimating()
         let url = Constants.SOCKET_URL + Constants.LEAVE_ROOM_API_ROUTE + "/" + id

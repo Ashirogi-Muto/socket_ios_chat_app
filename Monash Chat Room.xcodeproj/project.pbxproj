@@ -30,7 +30,6 @@
 		96411C1A25369B0A003ED01D /* AllChatRoomsTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 96411C1925369B0A003ED01D /* AllChatRoomsTableViewController.swift */; };
 		96411C232536A74C003ED01D /* AddNewRoomViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 96411C222536A74B003ED01D /* AddNewRoomViewController.swift */; };
 		96C128B52536C3A9001BBCCE /* Message.swift in Sources */ = {isa = PBXBuildFile; fileRef = 96C128B42536C3A9001BBCCE /* Message.swift */; };
-		96F43C9A25482F9B00B1B970 /* SwiftDate in Frameworks */ = {isa = PBXBuildFile; productRef = 96F43C9925482F9B00B1B970 /* SwiftDate */; };
 		FE85CA111D704CFEA7730CFD /* Pods_Monash_Chat_Room.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = F2C6A8C45F9F4A6A2353FC66 /* Pods_Monash_Chat_Room.framework */; };
 /* End PBXBuildFile section */
 
@@ -68,7 +67,6 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				96F43C9A25482F9B00B1B970 /* SwiftDate in Frameworks */,
 				9620558E2535450A00E0B575 /* SocketIO in Frameworks */,
 				96411C112536984D003ED01D /* MessageKit in Frameworks */,
 				FE85CA111D704CFEA7730CFD /* Pods_Monash_Chat_Room.framework in Frameworks */,
@@ -188,7 +186,6 @@
 			packageProductDependencies = (
 				9620558D2535450A00E0B575 /* SocketIO */,
 				96411C102536984D003ED01D /* MessageKit */,
-				96F43C9925482F9B00B1B970 /* SwiftDate */,
 			);
 			productName = "Monash Chat Room";
 			productReference = 962055712535415E00E0B575 /* Monash Chat Room.app */;
@@ -220,7 +217,6 @@
 			packageReferences = (
 				9620558C2535450A00E0B575 /* XCRemoteSwiftPackageReference "socket" */,
 				96411C0F2536984C003ED01D /* XCRemoteSwiftPackageReference "MessageKit" */,
-				96F43C9825482F9B00B1B970 /* XCRemoteSwiftPackageReference "SwiftDate" */,
 			);
 			productRefGroup = 962055722535415E00E0B575 /* Products */;
 			projectDirPath = "";
@@ -547,14 +543,6 @@
 				minimumVersion = 3.4.2;
 			};
 		};
-		96F43C9825482F9B00B1B970 /* XCRemoteSwiftPackageReference "SwiftDate" */ = {
-			isa = XCRemoteSwiftPackageReference;
-			repositoryURL = "https://github.com/malcommac/SwiftDate.git";
-			requirement = {
-				kind = upToNextMajorVersion;
-				minimumVersion = 6.2.0;
-			};
-		};
 /* End XCRemoteSwiftPackageReference section */
 
 /* Begin XCSwiftPackageProductDependency section */
@@ -567,11 +555,6 @@
 			isa = XCSwiftPackageProductDependency;
 			package = 96411C0F2536984C003ED01D /* XCRemoteSwiftPackageReference "MessageKit" */;
 			productName = MessageKit;
-		};
-		96F43C9925482F9B00B1B970 /* SwiftDate */ = {
-			isa = XCSwiftPackageProductDependency;
-			package = 96F43C9825482F9B00B1B970 /* XCRemoteSwiftPackageReference "SwiftDate" */;
-			productName = SwiftDate;
 		};
 /* End XCSwiftPackageProductDependency section */
 

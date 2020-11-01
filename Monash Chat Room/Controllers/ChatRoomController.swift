@@ -57,6 +57,7 @@ class ChatRoomController: MessagesViewController, SocketConnectionDelegate {
     func makeUserJoinTheRoom() {
         if userRoomIds?.contains(selectedRoomDetails!.id) == false {
             messageInputBar.sendButton.isEnabled = false
+            messageInputBar.isHidden = true
             let alertJoinAction = UIAlertAction(title: "Join", style: .default) { _ in
                 self.saveUserToRoom()
             }
@@ -90,6 +91,7 @@ class ChatRoomController: MessagesViewController, SocketConnectionDelegate {
                 DispatchQueue.main.async {
                     self.indicator.stopAnimating()
                     self.messageInputBar.sendButton.isEnabled = true
+                    self.messageInputBar.isHidden = false
                 }
             }
             
