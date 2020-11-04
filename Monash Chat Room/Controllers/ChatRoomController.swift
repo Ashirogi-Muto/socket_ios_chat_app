@@ -8,10 +8,11 @@
 import UIKit
 import MessageKit
 import InputBarAccessoryView
-import SwiftDate
+
 class ChatRoomController: MessagesViewController, SocketConnectionDelegate {
     
     var messages: [Message] = []
+    var messagesSortedByTimestamp: [Message] = []
     var user: User!
     var selectedRoomDetails: ChatRoomDetails?
     var indicator = UIActivityIndicatorView()
@@ -30,9 +31,18 @@ class ChatRoomController: MessagesViewController, SocketConnectionDelegate {
         messagesCollectionView.messagesDataSource = self
         messagesCollectionView.messagesLayoutDelegate = self
         messagesCollectionView.messagesDisplayDelegate = self
+        showMessageTimestampOnSwipeLeft = true
+        let adminSize = CGSize(width: 60, height: 45)
+        if let layout = messagesCollectionView.collectionViewLayout as? MessagesCollectionViewFlowLayout {
+            layout.setMessageIncomingAvatarSize(adminSize)
+            layout.setMessageOutgoingAvatarSize(adminSize)
+        }
+
         messageInputBar.delegate = self
         messageInputBar.inputTextView.placeholderLabel.text = "Type here..."
         messageInputBar.inputTextView.placeholderTextColor = Constants.PRIMARY_APP_COLOR
+        let controller = MessagesViewController()
+        controller.resignFirstResponder()
         indicator.style = UIActivityIndicatorView.Style.large
         indicator.center = view.center
         indicator.hidesWhenStopped = true
@@ -73,21 +83,18 @@ class ChatRoomController: MessagesViewController, SocketConnectionDelegate {
         indicator.startAnimating()
         let url = Constants.SOCKET_URL + Constants.JOIN_ROOM_API_ROUTE + "/" + selectedRoomDetails!.id
         let urlWithQuery = url + "?userEmail=" + logedInUserEmail!
-        print("URL \(urlWithQuery)")
         let finalUrl = URL(string: urlWithQuery)
         var request = URLRequest(url: finalUrl!)
         request.httpMethod = "POST"
-
+        
         let task = URLSession.shared.dataTask(with: request) { (data, response, error) in
             if error != nil {
-                print(error?.localizedDescription)
                 DispatchQueue.main.async {
                     self.indicator.stopAnimating()
                     self.showAlert(title: "Oop!", message: "Could not add you to this room! Please try again.", actionTitle: "Ok")
                 }
             }
             if let data = data, let dataString = String(data: data, encoding: .utf8) {
-                print("DATA \(dataString)")
                 DispatchQueue.main.async {
                     self.indicator.stopAnimating()
                     self.messageInputBar.sendButton.isEnabled = true
@@ -107,8 +114,9 @@ class ChatRoomController: MessagesViewController, SocketConnectionDelegate {
         })
         for message in sortedMessages {
             let timestamp = convertStringTimestampToDateTimestamp(timestamp: message.timestamp)
-            let newMessage = Message(text: message.text, chatRoomId: selectedRoomDetails!.id, user: user, id: message.id, timestamp: timestamp)
-            messages.append(newMessage)
+            let messageSender = User(senderId: message.senderId, name: message.senderId.components(separatedBy: "@")[0])
+            let newMessage = Message(text: message.text, chatRoomId: selectedRoomDetails!.id, user: messageSender, id: message.id, timestamp: timestamp)
+            messagesSortedByTimestamp.append(newMessage)
         }
         messagesCollectionView.reloadData()
         messagesCollectionView.scrollToBottom(animated: true)
@@ -162,8 +170,9 @@ class ChatRoomController: MessagesViewController, SocketConnectionDelegate {
                         let dateFormatter = DateFormatter()
                         dateFormatter.dateFormat = "yyyy-MM-dd HH:mm:ssZ"
                         let messageTimestamp = convertStringTimestampToDateTimestamp(timestamp: message.timestamp)
-                        let newMessage = Message(text: message.text, chatRoomId: self.selectedRoomDetails!.id, user: self.user, id: message.id, timestamp: messageTimestamp)
-                        messages.append(newMessage)
+                        let messageSender = User(senderId: message.senderId, name: message.senderId.components(separatedBy: "@")[0])
+                        let newMessage = Message(text: message.text, chatRoomId: self.selectedRoomDetails!.id, user: messageSender, id: message.id, timestamp: messageTimestamp)
+                        messagesSortedByTimestamp.append(newMessage)
                         messagesCollectionView.reloadData()
                         messagesCollectionView.scrollToBottom(animated: true)
                         
@@ -225,15 +234,15 @@ class ChatRoomController: MessagesViewController, SocketConnectionDelegate {
 
 extension ChatRoomController: MessagesDataSource {
     func currentSender() -> SenderType {
-        return Sender(senderId: UUID().uuidString, displayName: user.name)
+        return Sender(senderId: user.senderId, displayName: user.name)
     }
     
     func numberOfSections(in messagesCollectionView: MessagesCollectionView) -> Int {
-        return messages.count
+        return messagesSortedByTimestamp.count
     }
     
     func messageForItem(at indexPath: IndexPath, in messagesCollectionView: MessagesCollectionView) -> MessageType {
-        return messages[indexPath.section]
+        return messagesSortedByTimestamp[indexPath.section]
     }
     
     func messageTopLabelHeight(for message: MessageType, at indexPath: IndexPath, in messagesCollectionView: MessagesCollectionView) -> CGFloat {
@@ -246,23 +255,33 @@ extension ChatRoomController: MessagesLayoutDelegate {
         return 0
     }
     func messageStyle(for message: MessageType, at indexPath: IndexPath, in messagesCollectionView: MessagesCollectionView) -> MessageStyle {
-        let message = messages[indexPath.row]
-        return isFromCurrentSender(message: message) ? MessageStyle.bubbleTail(.bottomRight, .pointedEdge) : MessageStyle.bubbleTail(.bottomLeft, .pointedEdge)
+        let isFromCurrentLoggedInUser = isFromCurrentSender(senderId: message.sender.senderId)
+        if isFromCurrentLoggedInUser == true {
+            return MessageStyle.bubbleTail(.bottomRight, .pointedEdge)
+        }
+        else {
+            return MessageStyle.bubbleTail(.bottomLeft, .pointedEdge)
+        }
     }
-    
-    func isFromCurrentSender(message: MessageType) -> Bool {
-        if message.sender.senderId == logedInUserEmail {
+
+    func isFromCurrentSender(senderId: String) -> Bool {
+        if senderId == logedInUserEmail! {
             return true
         }
-        return false
+        else {
+            return false
+        }
     }
+    
+    
 }
 
 extension ChatRoomController: MessagesDisplayDelegate {
     func configureAvatarView(_ avatarView: AvatarView, for message: MessageType, at indexPath: IndexPath, in messagesCollectionView: MessagesCollectionView) {
         let color = Constants.PRIMARY_APP_COLOR
+        avatarView.setCorner(radius: 15)
         avatarView.backgroundColor = color
-        avatarView.initials = user.name.prefix(1).uppercased()
+        avatarView.initials = message.sender.displayName
     }
     
     func backgroundColor(for message: MessageType, at indexPath: IndexPath, in messagesCollectionView: MessagesCollectionView) -> UIColor {
@@ -277,8 +296,11 @@ extension ChatRoomController: MessagesDisplayDelegate {
 
 extension ChatRoomController: InputBarAccessoryViewDelegate {
     func inputBar(_ inputBar: InputBarAccessoryView, didPressSendButtonWith text: String) {
-        SocketHelper.Events.sendNewMessage.emit(params: ["text" : text, "chatRoomId": selectedRoomDetails!.id, "senderId": logedInUserEmail!, "id": UUID().uuidString])
-        inputBar.inputTextView.text = ""
-        messagesCollectionView.scrollToBottom(animated: true)
+        if text.count > 0 {
+            let trimmedString = text.trimmingCharacters(in: .whitespacesAndNewlines)
+            SocketHelper.Events.sendNewMessage.emit(params: ["text" : trimmedString, "chatRoomId": selectedRoomDetails!.id, "senderId": logedInUserEmail!, "id": UUID().uuidString])
+            inputBar.inputTextView.text = ""
+            messagesCollectionView.scrollToBottom(animated: true)
+        }
     }
 }

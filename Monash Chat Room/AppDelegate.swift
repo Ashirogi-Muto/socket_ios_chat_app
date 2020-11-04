@@ -80,10 +80,9 @@ class AppDelegate: UIResponder, UIApplicationDelegate, SocketConnectionDelegate,
                     let messageDataJson = try JSONSerialization.data(withJSONObject: arr[0])
                     let message = try JSONDecoder().decode(MessageDetails.self, from: messageDataJson)
                     if message.senderId != loggedInUserEmail && ((userRoomIds?.contains(message.chatRoomId)) != nil) {
-//                        self.sendNotification()
+                        self.sendNotification()
                     }
                 }
-                self.sendNotification()
             } catch let error {
                 print("ERROR IN <><><>< \(error.localizedDescription)")
             }
@@ -96,7 +95,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate, SocketConnectionDelegate,
         content.body = "You've got a new message!"
         content.sound = UNNotificationSound.default
         content.badge = 1
-
+        
         let request = UNNotificationRequest(identifier: UUID().uuidString, content: content, trigger: nil)
         UNUserNotificationCenter.current().add(request) { (error) in
             if let error = error {

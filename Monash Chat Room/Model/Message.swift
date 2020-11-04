@@ -7,7 +7,6 @@
 
 import Foundation
 import MessageKit
-import SwiftDate
 
 struct Message {
     let text: String
