@@ -39,7 +39,6 @@ class AddNewRoomViewController: UIViewController {
             let loggedInUserId = userDefault.string(forKey: Constants.LOGGED_IN_USER_EMAIL_KEY)
             let postString = "name=\(roomNameInput.text!)&tag=\(roomTagInput.text!)&userId=\(loggedInUserId!)&roomId=\(roomId)"
             createNewRoom(inputParameters: postString)
-            // SocketHelper.Events.addNewRoom.emit(params: ["name": roomNameInput.text!, "tag": roomTagInput.text!, "userId": "kpan0021@student.monash.edu"])
             
         } else{
             indicator.stopAnimating()
@@ -64,7 +63,7 @@ class AddNewRoomViewController: UIViewController {
         if let error = error {
                 print("Error took place \(error)")
                 DispatchQueue.main.async {
-                    self.popUpMessage(message: "New Room cannot be added")
+                    self.popUpMessage(message: "Could not create the room! Please ty again.")
                     self.stopingIndicator()
                 }
                 return
@@ -74,7 +73,7 @@ class AddNewRoomViewController: UIViewController {
                 print("New Room has been added")
                 print("Response data string:\n \(dataString)")
                 DispatchQueue.main.async {
-                    self.popUpMessage(message: "New Room is added")
+                    self.popUpMessage(message: "Room created!")
                     self.stopingIndicator()
                     self.roomNameInput.text = nil
                     self.roomTagInput.text = nil
@@ -85,6 +84,8 @@ class AddNewRoomViewController: UIViewController {
     }
     
     func inputValidation () -> Bool{
+        let roomNameErrorMessage = "Please enter a name!"
+        let roomTagErrorMessage = "Please enter a tag!"
         var validation = true
         let trimmedRoomName = (roomNameInput.text)?.trimmingCharacters(in: .whitespaces)
         let trimmedRoomTag = (roomTagInput.text)?.trimmingCharacters(in: .whitespaces)
@@ -93,21 +94,21 @@ class AddNewRoomViewController: UIViewController {
         let regex = try! NSRegularExpression(pattern: "[^A-Za-z0-9\\s]")
         if trimmedRoomName!.count < 1 {
             validation = false
-            validationUI(inputField: roomNameInput,messageLabel: nameErrorMessageLabel,message: "Please enter Room Name!" )
+            validationUI(inputField: roomNameInput,messageLabel: nameErrorMessageLabel,message: roomNameErrorMessage )
         }
         if trimmedRoomTag!.count < 1 {
             validation = false
-            validationUI(inputField: roomTagInput,messageLabel: tagErrorMessageLabel,message: "Please enter Room Tag!" )
+            validationUI(inputField: roomTagInput,messageLabel: tagErrorMessageLabel,message: roomTagErrorMessage )
         }
         
         if trimmedRoomName!.count > 1 && regex.firstMatch(in: trimmedRoomName!, options: [], range: rangeRoomName) != nil {
             validation = false
-            validationUI(inputField: roomNameInput,messageLabel: nameErrorMessageLabel,message: "Please enter correct Room Name!" )
+            validationUI(inputField: roomNameInput,messageLabel: nameErrorMessageLabel,message: roomNameErrorMessage )
         }
         
         if trimmedRoomTag!.count > 1 && regex.firstMatch(in: trimmedRoomTag!, options: [], range: rangeRoomTag) != nil   {
             validation = false
-            validationUI(inputField: roomTagInput,messageLabel: tagErrorMessageLabel,message: "Please enter correct Room Tag!" )
+            validationUI(inputField: roomTagInput,messageLabel: tagErrorMessageLabel,message: roomTagErrorMessage )
         }
         return validation
     }

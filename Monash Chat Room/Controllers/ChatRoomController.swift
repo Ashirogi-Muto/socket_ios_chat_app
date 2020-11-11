@@ -32,12 +32,6 @@ class ChatRoomController: MessagesViewController, SocketConnectionDelegate {
         messagesCollectionView.messagesLayoutDelegate = self
         messagesCollectionView.messagesDisplayDelegate = self
         showMessageTimestampOnSwipeLeft = true
-        let adminSize = CGSize(width: 60, height: 45)
-        if let layout = messagesCollectionView.collectionViewLayout as? MessagesCollectionViewFlowLayout {
-            layout.setMessageIncomingAvatarSize(adminSize)
-            layout.setMessageOutgoingAvatarSize(adminSize)
-        }
-
         messageInputBar.delegate = self
         messageInputBar.inputTextView.placeholderLabel.text = "Type here..."
         messageInputBar.inputTextView.placeholderTextColor = Constants.PRIMARY_APP_COLOR
@@ -114,7 +108,7 @@ class ChatRoomController: MessagesViewController, SocketConnectionDelegate {
         })
         for message in sortedMessages {
             let timestamp = convertStringTimestampToDateTimestamp(timestamp: message.timestamp)
-            let messageSender = User(senderId: message.senderId, name: message.senderId.components(separatedBy: "@")[0])
+            let messageSender = User(senderId: message.senderId, name: message.senderId.prefix(1).uppercased())
             let newMessage = Message(text: message.text, chatRoomId: selectedRoomDetails!.id, user: messageSender, id: message.id, timestamp: timestamp)
             messagesSortedByTimestamp.append(newMessage)
         }
@@ -170,7 +164,7 @@ class ChatRoomController: MessagesViewController, SocketConnectionDelegate {
                         let dateFormatter = DateFormatter()
                         dateFormatter.dateFormat = "yyyy-MM-dd HH:mm:ssZ"
                         let messageTimestamp = convertStringTimestampToDateTimestamp(timestamp: message.timestamp)
-                        let messageSender = User(senderId: message.senderId, name: message.senderId.components(separatedBy: "@")[0])
+                        let messageSender = User(senderId: message.senderId, name: message.senderId.prefix(1).uppercased())
                         let newMessage = Message(text: message.text, chatRoomId: self.selectedRoomDetails!.id, user: messageSender, id: message.id, timestamp: messageTimestamp)
                         messagesSortedByTimestamp.append(newMessage)
                         messagesCollectionView.reloadData()
@@ -230,6 +224,16 @@ class ChatRoomController: MessagesViewController, SocketConnectionDelegate {
     
     func connectedToSocket(isConnected: Bool) {
     }
+    
+    func generateRandomAvatarColor(id: String) -> UIColor {
+        let hash = abs(id.hashValue)
+        let colorNum = hash % (256*256*256)
+        let red = colorNum >> 16
+        let green = (colorNum & 0x00FF00) >> 8
+        let blue = (colorNum & 0x0000FF)
+        let userColor = UIColor(red: CGFloat(red)/255.0, green: CGFloat(green)/255.0, blue: CGFloat(blue)/255.0, alpha: 1.0)
+        return userColor
+    }
 }
 
 extension ChatRoomController: MessagesDataSource {
@@ -245,15 +249,12 @@ extension ChatRoomController: MessagesDataSource {
         return messagesSortedByTimestamp[indexPath.section]
     }
     
-    func messageTopLabelHeight(for message: MessageType, at indexPath: IndexPath, in messagesCollectionView: MessagesCollectionView) -> CGFloat {
-        return 12
+    func cellBottomLabelHeight(for message: MessageType, at indexPath: IndexPath, in messagesCollectionView: MessagesCollectionView) -> CGFloat {
+        return 15
     }
 }
 
 extension ChatRoomController: MessagesLayoutDelegate {
-    func heightForLocation(message: MessageType, at indexPath: IndexPath, with maxWidth: CGFloat, in messagesCollectionView: MessagesCollectionView) -> CGFloat {
-        return 0
-    }
     func messageStyle(for message: MessageType, at indexPath: IndexPath, in messagesCollectionView: MessagesCollectionView) -> MessageStyle {
         let isFromCurrentLoggedInUser = isFromCurrentSender(senderId: message.sender.senderId)
         if isFromCurrentLoggedInUser == true {
@@ -263,7 +264,7 @@ extension ChatRoomController: MessagesLayoutDelegate {
             return MessageStyle.bubbleTail(.bottomLeft, .pointedEdge)
         }
     }
-
+    
     func isFromCurrentSender(senderId: String) -> Bool {
         if senderId == logedInUserEmail! {
             return true
@@ -273,14 +274,18 @@ extension ChatRoomController: MessagesLayoutDelegate {
         }
     }
     
-    
 }
 
 extension ChatRoomController: MessagesDisplayDelegate {
     func configureAvatarView(_ avatarView: AvatarView, for message: MessageType, at indexPath: IndexPath, in messagesCollectionView: MessagesCollectionView) {
-        let color = Constants.PRIMARY_APP_COLOR
         avatarView.setCorner(radius: 15)
-        avatarView.backgroundColor = color
+        
+        if isFromCurrentSender(senderId: message.sender.senderId) {
+            avatarView.backgroundColor = Constants.PRIMARY_APP_COLOR
+        }
+        else {
+            avatarView.backgroundColor = generateRandomAvatarColor(id: message.sender.senderId)
+        }
         avatarView.initials = message.sender.displayName
     }
     

@@ -15,6 +15,7 @@ struct Constants {
     static let ALL_ROOMS_TO_CHAT_ROOM_SEGUE_IDENTIFIER = "allRoomsToChatRoomSegue"
     static let FETCH_ALL_ROOMS_API_ROUTE = "/all-rooms"
     static let FETCH_ALL_ROOM_MESSAGES_API_ROUTE = "/all-messages"
+    static let FETCH_ROOM_DETAILS_API_ROUTE = "/room"
     static let FETCH_USER_ROOMS_API_ROUTE = "/user-rooms"
     static let IOS_APP_BLUE_COLOR = UIColor(red: 0.08, green: 0.49, blue: 0.98, alpha: 1.00)
     static let JOIN_ROOM_API_ROUTE = "/join-room"
