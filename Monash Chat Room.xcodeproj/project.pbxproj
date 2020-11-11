@@ -29,8 +29,6 @@
 		96411C1725369A59003ED01D /* UserChatRoomsTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 96411C1625369A59003ED01D /* UserChatRoomsTableViewController.swift */; };
 		96411C1A25369B0A003ED01D /* AllChatRoomsTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 96411C1925369B0A003ED01D /* AllChatRoomsTableViewController.swift */; };
 		96411C232536A74C003ED01D /* AddNewRoomViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 96411C222536A74B003ED01D /* AddNewRoomViewController.swift */; };
-		9660B1182552BEC800338AFD /* MoveToChatRoomFromNotificationViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9660B1172552BEC800338AFD /* MoveToChatRoomFromNotificationViewController.swift */; };
-		96796CC32553E66D00470472 /* FetchRoomDetailsResponse.swift in Sources */ = {isa = PBXBuildFile; fileRef = 96796CC22553E66D00470472 /* FetchRoomDetailsResponse.swift */; };
 		96C128B52536C3A9001BBCCE /* Message.swift in Sources */ = {isa = PBXBuildFile; fileRef = 96C128B42536C3A9001BBCCE /* Message.swift */; };
 		FE85CA111D704CFEA7730CFD /* Pods_Monash_Chat_Room.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = F2C6A8C45F9F4A6A2353FC66 /* Pods_Monash_Chat_Room.framework */; };
 /* End PBXBuildFile section */
@@ -59,8 +57,6 @@
 		96411C1625369A59003ED01D /* UserChatRoomsTableViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserChatRoomsTableViewController.swift; sourceTree = "<group>"; };
 		96411C1925369B0A003ED01D /* AllChatRoomsTableViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AllChatRoomsTableViewController.swift; sourceTree = "<group>"; };
 		96411C222536A74B003ED01D /* AddNewRoomViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddNewRoomViewController.swift; sourceTree = "<group>"; };
-		9660B1172552BEC800338AFD /* MoveToChatRoomFromNotificationViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MoveToChatRoomFromNotificationViewController.swift; sourceTree = "<group>"; };
-		96796CC22553E66D00470472 /* FetchRoomDetailsResponse.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FetchRoomDetailsResponse.swift; sourceTree = "<group>"; };
 		96C128B42536C3A9001BBCCE /* Message.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Message.swift; sourceTree = "<group>"; };
 		9EA502DBB813642BC04565DE /* Pods-Monash Chat Room.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Monash Chat Room.debug.xcconfig"; path = "Target Support Files/Pods-Monash Chat Room/Pods-Monash Chat Room.debug.xcconfig"; sourceTree = "<group>"; };
 		F2C6A8C45F9F4A6A2353FC66 /* Pods_Monash_Chat_Room.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_Monash_Chat_Room.framework; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -132,7 +128,6 @@
 				96411C1925369B0A003ED01D /* AllChatRoomsTableViewController.swift */,
 				96411C222536A74B003ED01D /* AddNewRoomViewController.swift */,
 				96039BDF253C097300393465 /* SocketConnectedProtcol.swift */,
-				9660B1172552BEC800338AFD /* MoveToChatRoomFromNotificationViewController.swift */,
 			);
 			path = Controllers;
 			sourceTree = "<group>";
@@ -148,7 +143,6 @@
 				96039BE5253C0D1200393465 /* ChatRoomDetails.swift */,
 				9606E280253DA08900E20560 /* FetchRoomsAPIResponseModel.swift */,
 				9638DC0F253EA37E0050E326 /* FetcRoomMessagesAPIResponseModel.swift */,
-				96796CC22553E66D00470472 /* FetchRoomDetailsResponse.swift */,
 			);
 			path = Model;
 			sourceTree = "<group>";
@@ -327,9 +321,7 @@
 				96C128B52536C3A9001BBCCE /* Message.swift in Sources */,
 				962055752535415E00E0B575 /* AppDelegate.swift in Sources */,
 				9620557F2535415E00E0B575 /* Monash_Chat_Room.xcdatamodeld in Sources */,
-				96796CC32553E66D00470472 /* FetchRoomDetailsResponse.swift in Sources */,
 				962055772535415E00E0B575 /* SceneDelegate.swift in Sources */,
-				9660B1182552BEC800338AFD /* MoveToChatRoomFromNotificationViewController.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
