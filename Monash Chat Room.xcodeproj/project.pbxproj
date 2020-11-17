@@ -7,6 +7,8 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		2B036D2825621A80001B4528 /* UserChatRoomsTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2B036D2725621A80001B4528 /* UserChatRoomsTableViewCell.swift */; };
+		2B036D2B25621AA7001B4528 /* AllChatRoomsTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2B036D2A25621AA7001B4528 /* AllChatRoomsTableViewCell.swift */; };
 		96039BCA253BE8EF00393465 /* LoggedInUser+CoreDataClass.swift in Sources */ = {isa = PBXBuildFile; fileRef = 96039BC8253BE8EF00393465 /* LoggedInUser+CoreDataClass.swift */; };
 		96039BCB253BE8EF00393465 /* LoggedInUser+CoreDataProperties.swift in Sources */ = {isa = PBXBuildFile; fileRef = 96039BC9253BE8EF00393465 /* LoggedInUser+CoreDataProperties.swift */; };
 		96039BE0253C097300393465 /* SocketConnectedProtcol.swift in Sources */ = {isa = PBXBuildFile; fileRef = 96039BDF253C097300393465 /* SocketConnectedProtcol.swift */; };
@@ -34,6 +36,8 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		2B036D2725621A80001B4528 /* UserChatRoomsTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserChatRoomsTableViewCell.swift; sourceTree = "<group>"; };
+		2B036D2A25621AA7001B4528 /* AllChatRoomsTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AllChatRoomsTableViewCell.swift; sourceTree = "<group>"; };
 		64FFF974EF5350054BE172BA /* Pods-Monash Chat Room.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Monash Chat Room.release.xcconfig"; path = "Target Support Files/Pods-Monash Chat Room/Pods-Monash Chat Room.release.xcconfig"; sourceTree = "<group>"; };
 		96039BC8253BE8EF00393465 /* LoggedInUser+CoreDataClass.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "LoggedInUser+CoreDataClass.swift"; sourceTree = "<group>"; };
 		96039BC9253BE8EF00393465 /* LoggedInUser+CoreDataProperties.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "LoggedInUser+CoreDataProperties.swift"; sourceTree = "<group>"; };
@@ -128,6 +132,8 @@
 				96411C1925369B0A003ED01D /* AllChatRoomsTableViewController.swift */,
 				96411C222536A74B003ED01D /* AddNewRoomViewController.swift */,
 				96039BDF253C097300393465 /* SocketConnectedProtcol.swift */,
+				2B036D2725621A80001B4528 /* UserChatRoomsTableViewCell.swift */,
+				2B036D2A25621AA7001B4528 /* AllChatRoomsTableViewCell.swift */,
 			);
 			path = Controllers;
 			sourceTree = "<group>";
@@ -306,6 +312,7 @@
 			files = (
 				9620559925354DDD00E0B575 /* SocketHelper.swift in Sources */,
 				9606E281253DA08900E20560 /* FetchRoomsAPIResponseModel.swift in Sources */,
+				2B036D2B25621AA7001B4528 /* AllChatRoomsTableViewCell.swift in Sources */,
 				9620559625354AA000E0B575 /* Constants.swift in Sources */,
 				9638DC10253EA37E0050E326 /* FetcRoomMessagesAPIResponseModel.swift in Sources */,
 				96411C1A25369B0A003ED01D /* AllChatRoomsTableViewController.swift in Sources */,
@@ -321,6 +328,7 @@
 				96C128B52536C3A9001BBCCE /* Message.swift in Sources */,
 				962055752535415E00E0B575 /* AppDelegate.swift in Sources */,
 				9620557F2535415E00E0B575 /* Monash_Chat_Room.xcdatamodeld in Sources */,
+				2B036D2825621A80001B4528 /* UserChatRoomsTableViewCell.swift in Sources */,
 				962055772535415E00E0B575 /* SceneDelegate.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

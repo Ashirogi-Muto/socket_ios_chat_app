@@ -80,10 +80,10 @@ class AppDelegate: UIResponder, UIApplicationDelegate, SocketConnectionDelegate,
                     let messageDataJson = try JSONSerialization.data(withJSONObject: arr[0])
                     let message = try JSONDecoder().decode(MessageDetails.self, from: messageDataJson)
                     if message.senderId != loggedInUserEmail && ((userRoomIds?.contains(message.chatRoomId)) != nil) {
-//                        self.sendNotification()
+                       self.sendNotification()
                     }
                 }
-                self.sendNotification()
+              //  self.sendNotification()
             } catch let error {
                 print("ERROR IN <><><>< \(error.localizedDescription)")
             }

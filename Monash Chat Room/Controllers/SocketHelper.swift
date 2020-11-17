@@ -17,7 +17,7 @@ class SocketHelper {
         socketClient = manager.defaultSocket
     }
     
-    func connectToSocket() {
+    func connectToSocket(){
         socketClient?.on(clientEvent: .connect, callback: { (data, ack) in
             print("CONNECTED \(data)")
             self.delegate?.connectedToSocket(isConnected: true)
