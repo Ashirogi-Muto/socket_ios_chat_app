@@ -121,14 +121,12 @@ class UserChatRoomsTableViewController: UITableViewController, UISearchBarDelega
 
         let task = URLSession.shared.dataTask(with: request) { (data, response, error) in
             if error != nil {
-                print(error?.localizedDescription)
                 DispatchQueue.main.async {
                     self.indicator.stopAnimating()
                     self.showAlert(title: "Oop!", message: "Could not remove you from this room! Please try again.", actionTitle: "Ok")
                 }
             }
-            if let data = data, let dataString = String(data: data, encoding: .utf8) {
-                print("DATA \(dataString)")
+            if let data = data, let _ = String(data: data, encoding: .utf8) {
                 DispatchQueue.main.async {
                     self.indicator.stopAnimating()
                     self.fetchUserChatRooms()

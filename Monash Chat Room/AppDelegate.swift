@@ -50,6 +50,8 @@ class AppDelegate: UIResponder, UIApplicationDelegate, SocketConnectionDelegate,
     }
     
     func userNotificationCenter(_ center: UNUserNotificationCenter, didReceive response: UNNotificationResponse, withCompletionHandler completionHandler: @escaping () -> Void) {
+        UIApplication.shared.applicationIconBadgeNumber = 0
+        let chatRoomId = response.notification.request.content.categoryIdentifier
         completionHandler()
     }
     
@@ -80,24 +82,31 @@ class AppDelegate: UIResponder, UIApplicationDelegate, SocketConnectionDelegate,
                     let messageDataJson = try JSONSerialization.data(withJSONObject: arr[0])
                     let message = try JSONDecoder().decode(MessageDetails.self, from: messageDataJson)
                     if message.senderId != loggedInUserEmail && ((userRoomIds?.contains(message.chatRoomId)) != nil) {
+
                        self.sendNotification()
                     }
                 }
               //  self.sendNotification()
+
+                        self.sendNotification(chatRoomId: message.chatRoomId)
+                    }
+                }
+
             } catch let error {
                 print("ERROR IN <><><>< \(error.localizedDescription)")
             }
         }
     }
     
-    func sendNotification() {
+    func sendNotification(chatRoomId: String) {
         let content = UNMutableNotificationContent()
         content.title = "Hello"
         content.body = "You've got a new message!"
         content.sound = UNNotificationSound.default
         content.badge = 1
-
+        content.categoryIdentifier = chatRoomId
         let request = UNNotificationRequest(identifier: UUID().uuidString, content: content, trigger: nil)
+        
         UNUserNotificationCenter.current().add(request) { (error) in
             if let error = error {
                 print("Unable to Add Notification Request (\(error), \(error.localizedDescription))")
