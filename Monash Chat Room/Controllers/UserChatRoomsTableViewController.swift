@@ -62,10 +62,19 @@ class UserChatRoomsTableViewController: UITableViewController, UISearchBarDelega
     }
     
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        let cell = tableView.dequeueReusableCell(withIdentifier: Constants.USER_CHAT_ROOMS_CELL_VIEW_IDENTIFIER, for: indexPath) as UITableViewCell
+        let cell = tableView.dequeueReusableCell(withIdentifier: Constants.USER_CHAT_ROOMS_CELL_VIEW_IDENTIFIER, for: indexPath) as! UserChatRoomsTableViewCell
         
-        cell.textLabel?.text = filteredChatRooms![indexPath.row].name
-        cell.detailTextLabel?.text = filteredChatRooms![indexPath.row].tag
+        cell.roomNameLabel?.text = filteredChatRooms![indexPath.row].name
+        cell.descriptionLabel?.text = filteredChatRooms![indexPath.row].tag
+        cell.dateLabel?.text = filteredChatRooms![indexPath.row].createdAt
+        
+        cell.containerView.layer.cornerRadius = 10.0;
+        cell.containerView.layer.borderWidth = 1.0;
+        cell.containerView.layer.borderColor = UIColor.black.cgColor;
+        cell.containerView.layer.shadowRadius = 5.0;
+        cell.containerView.layer.shadowOpacity = 0.4;
+        cell.designView.layer.cornerRadius = 10.0;
+        
         return cell
     }
     

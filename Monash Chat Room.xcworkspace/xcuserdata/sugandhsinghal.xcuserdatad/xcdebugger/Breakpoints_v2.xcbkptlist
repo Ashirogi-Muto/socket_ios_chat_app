@@ -1,0 +1,72 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Bucket
+   uuid = "195965EA-6B3B-4A12-92A3-C3C0896677DA"
+   type = "0"
+   version = "2.0">
+   <Breakpoints>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            uuid = "AD2C45F7-8475-4834-8C77-E27FFD973AAB"
+            shouldBeEnabled = "No"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "Monash Chat Room/Controllers/ChatRoomController.swift"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "57"
+            endingLineNumber = "57"
+            landmarkName = "doesUserBelongToTheRoom()"
+            landmarkType = "7">
+            <Locations>
+               <Location
+                  uuid = "AD2C45F7-8475-4834-8C77-E27FFD973AAB - fcf8df085245a839"
+                  shouldBeEnabled = "Yes"
+                  ignoreCount = "0"
+                  continueAfterRunningActions = "No"
+                  symbolName = "Monash_Chat_Room.ChatRoomController.makeUserJoinTheRoom() -&gt; ()"
+                  moduleName = "Monash Chat Room"
+                  usesParentBreakpointCondition = "Yes"
+                  urlString = "file:///Users/sugandhsinghal/Desktop/Advance%20mobile/Assignment%202.1/FIT142_assignment_2_ios_app/Monash%20Chat%20Room/Controllers/ChatRoomController.swift"
+                  startingColumnNumber = "9223372036854775807"
+                  endingColumnNumber = "9223372036854775807"
+                  startingLineNumber = "60"
+                  endingLineNumber = "60"
+                  offsetFromSymbolStart = "1112">
+               </Location>
+               <Location
+                  uuid = "AD2C45F7-8475-4834-8C77-E27FFD973AAB - 7b69e530ea683b7f"
+                  shouldBeEnabled = "Yes"
+                  ignoreCount = "0"
+                  continueAfterRunningActions = "No"
+                  symbolName = "closure #1 (__C.UIAlertAction) -&gt; () in Monash_Chat_Room.ChatRoomController.makeUserJoinTheRoom() -&gt; ()"
+                  moduleName = "Monash Chat Room"
+                  usesParentBreakpointCondition = "Yes"
+                  urlString = "file:///Users/sugandhsinghal/Desktop/Advance%20mobile/Assignment%202.1/FIT142_assignment_2_ios_app/Monash%20Chat%20Room/Controllers/ChatRoomController.swift"
+                  startingColumnNumber = "9223372036854775807"
+                  endingColumnNumber = "9223372036854775807"
+                  startingLineNumber = "61"
+                  endingLineNumber = "61"
+                  offsetFromSymbolStart = "19">
+               </Location>
+            </Locations>
+         </BreakpointContent>
+      </BreakpointProxy>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            uuid = "7058735A-FE2E-425B-9AA6-E21EF8F1AE25"
+            shouldBeEnabled = "No"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "Monash Chat Room/Controllers/ChatRoomController.swift"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "54"
+            endingLineNumber = "54"
+            landmarkName = "doesUserBelongToTheRoom()"
+            landmarkType = "7">
+         </BreakpointContent>
+      </BreakpointProxy>
+   </Breakpoints>
+</Bucket>
