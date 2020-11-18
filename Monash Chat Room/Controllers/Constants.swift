@@ -10,7 +10,7 @@ import UIKit
 
 struct Constants {
     static let ADD_NEW_ROOM_API_ROUTE = "/new-room"
-    static let ALL_CHAT_ROOMS_CELL_VIEW_IDENTIFIER = "allChatRoomCellView"
+    static let ALL_CHAT_ROOMS_CELL_VIEW_IDENTIFIER = "chatRoomCellView"
     static let ALL_ROOMS_SEGUE_IDENTIFIER = "allRoomsSegue"
     static let ALL_ROOMS_TO_CHAT_ROOM_SEGUE_IDENTIFIER = "allRoomsToChatRoomSegue"
     static let FETCH_ALL_ROOMS_API_ROUTE = "/all-rooms"
@@ -29,7 +29,7 @@ struct Constants {
     static var PRIMARY_APP_COLOR: UIColor { return UIColor(red: 1.00, green: 0.40, blue: 0.14, alpha: 1.00) }
 //    static let SOCKET_URL = "http://localhost:3000"
     static let SOCKET_URL = "http://ec2-52-70-46-179.compute-1.amazonaws.com:3000"
-    static let USER_CHAT_ROOMS_CELL_VIEW_IDENTIFIER = "userChatRoomCellView"
+    static let USER_CHAT_ROOMS_CELL_VIEW_IDENTIFIER = "chatRoomCellView"
     static let USER_CHAT_ROOMS_TO_CHAT_ROOM_SEGUE_IDENTIFIER = "userChatRoomsToChatRoomSegue"
     static let USER_CHAT_ROOM_VIEW_STRORYBOARD_ID = "userChatRoomView"
     static let USER_LOGGED_IN_DEFAULT_KEY = "isUserLogedIn"
