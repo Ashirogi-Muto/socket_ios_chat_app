@@ -1,24 +1,20 @@
 //
-//  AllChatRoomsTableViewCell.swift
+//  ChatRoomTableViewCell.swift
 //  Monash Chat Room
 //
-//  Created by Sugandh Singhal on 16/11/20.
+//  Created by Sugandh Singhal on 18/11/20.
 //
 
 import UIKit
 
-class AllChatRoomsTableViewCell: UITableViewCell {
+class ChatRoomTableViewCell: UITableViewCell {
     
-    @IBOutlet weak var roomNameLabel: UILabel!
-    
-    @IBOutlet weak var descriptionLabel: UILabel!
-    
-    
-    @IBOutlet weak var dateLabel: UILabel!
     
     @IBOutlet weak var containerView: UIView!
+    @IBOutlet weak var roomLabel: UILabel!
+    @IBOutlet weak var descriptionLabel: UILabel!
+    @IBOutlet weak var borderView: UIView!
     
-    @IBOutlet weak var designView: UIView!
     
     override func awakeFromNib() {
         super.awakeFromNib()

@@ -25,7 +25,6 @@ class AddNewRoomViewController: UIViewController {
         view.addSubview(indicator)
     }
     
-    
     @IBAction func addNewRoomAction(_ sender: Any) {
         validationUIReset()
         let validation = inputValidation()
