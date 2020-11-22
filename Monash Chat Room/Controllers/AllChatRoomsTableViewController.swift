@@ -7,6 +7,9 @@
 
 import UIKit
 
+/**
+ Class to manage all the chat rooms available in the app
+ */
 class AllChatRoomsTableViewController: UITableViewController, UISearchBarDelegate, UITextFieldDelegate, UISearchResultsUpdating {
     
     var allChatRooms: [ChatRoomDetails]?
@@ -41,15 +44,6 @@ class AllChatRoomsTableViewController: UITableViewController, UISearchBarDelegat
         if filteredChatRooms?.count ?? 0 > 0 {
             numberOfSections = 1
         }
-        else {
-//            let noDataLabel: UILabel  = UILabel(frame: CGRect(x: 0, y: 0, width: tableView.bounds.size.width, height: tableView.bounds.size.height))
-//            noDataLabel.numberOfLines = 0
-//            noDataLabel.text = Constants.NO_ROOMS_LABEL
-//            noDataLabel.textColor = Constants.LABEL_COLOR
-//            noDataLabel.textAlignment = .center
-//            tableView.backgroundView  = noDataLabel
-//            tableView.separatorStyle  = .none
-        }
         return numberOfSections
     }
     
@@ -63,7 +57,6 @@ class AllChatRoomsTableViewController: UITableViewController, UISearchBarDelegat
         cell.descriptionLabel?.text = filteredChatRooms![indexPath.row].tag
         
         cell.containerView.layer.cornerRadius = 10.0;
-        //cell.containerView.layer.borderWidth = 1.0;
         cell.containerView.layer.borderColor = UIColor.black.cgColor;
         cell.containerView.layer.shadowOffset = CGSize(width: 0 , height:2)
         cell.containerView.layer.shadowRadius = 5.0;
@@ -103,6 +96,9 @@ class AllChatRoomsTableViewController: UITableViewController, UISearchBarDelegat
           
     }
     
+    /**
+     Fetch all the chat rooms available in the app
+     */
     func fetchAllChatRooms() {
         let url = Constants.SOCKET_URL + Constants.FETCH_ALL_ROOMS_API_ROUTE
         let finalUrl = URL(string: url)

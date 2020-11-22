@@ -31,7 +31,7 @@ class ViewController: UIViewController, GIDSignInDelegate {
     }
     
     
-    
+    //MARK Google Sign In
     func sign(_ signIn: GIDSignIn!, didSignInFor user: GIDGoogleUser!, withError error: Error!) {
         if let error = error {
             if (error as NSError).code == GIDSignInErrorCode.hasNoAuthInKeychain.rawValue {
@@ -42,6 +42,7 @@ class ViewController: UIViewController, GIDSignInDelegate {
             return
         }
         let email = user.profile.email
+        //Check if the given email has a valid Monash domain
         if !(email?.contains(Constants.MONASH_EMAIL_DOMAIN))! {
             signOut()
             showAlert(title: "Error", message: "Please use a valid Monash email address to login", actionTitle: "Ok")
@@ -57,6 +58,7 @@ class ViewController: UIViewController, GIDSignInDelegate {
         loggedInUser.firstName = firstName
         loggedInUser.lastName = lastName
         loggedInUser.userId = userId
+        //save the user data
         do {
             try managedObjectContext?.save()
             userDefaults.set(true, forKey: Constants.USER_LOGGED_IN_DEFAULT_KEY)

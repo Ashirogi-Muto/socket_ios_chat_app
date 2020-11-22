@@ -7,6 +7,9 @@
 
 import Foundation
 
+/**
+ Struct to define the fetch room API response
+ */
 struct FetchRoomsAPIResponse: Decodable {
     let message: String
     let result: ResultModel

@@ -9,6 +9,10 @@ import UIKit
 import MessageKit
 import InputBarAccessoryView
 
+/**
+ The controller responsible to manage the individual chat room
+ Lets the user send, receive, and see the messages in a chat room
+ */
 class ChatRoomController: MessagesViewController, SocketConnectionDelegate {
     
     var messages: [Message] = []
@@ -48,6 +52,8 @@ class ChatRoomController: MessagesViewController, SocketConnectionDelegate {
         doesUserBelongToTheRoom()
     }
     
+    
+    //Check if the user belongs to the selected room
     func doesUserBelongToTheRoom() {
         if checkIfUserRoomIdsKeyExist() == false {
             fetchUserChatRooms()
@@ -58,6 +64,10 @@ class ChatRoomController: MessagesViewController, SocketConnectionDelegate {
         }
     }
     
+    /**
+     If the user has not joined the selected room
+     ask the user if it wishes to join the room
+     */
     func makeUserJoinTheRoom() {
         if userRoomIds?.contains(selectedRoomDetails!.id) == false {
             messageInputBar.sendButton.isEnabled = false
@@ -72,7 +82,10 @@ class ChatRoomController: MessagesViewController, SocketConnectionDelegate {
             present(alert, animated: true, completion: nil)
         }
     }
-    
+    /**
+     If the user wants to join the room
+     make an api call to save the user to the rooom
+     */
     func saveUserToRoom() {
         indicator.startAnimating()
         let url = Constants.SOCKET_URL + Constants.JOIN_ROOM_API_ROUTE + "/" + selectedRoomDetails!.id
@@ -100,6 +113,10 @@ class ChatRoomController: MessagesViewController, SocketConnectionDelegate {
         task.resume()
     }
     
+    /**
+     Sort all the message by timestamp and
+    convert them to MessageKit Message object type
+     */
     func convertFetchedMessgesToMessageKitType(allMessages: [MessageDetails]) {
         let sortedMessages: [MessageDetails] = allMessages.sorted(by: { (first, next) -> Bool in
             let firstTimestamp = convertStringTimestampToDateTimestamp(timestamp: first.timestamp)
@@ -116,6 +133,9 @@ class ChatRoomController: MessagesViewController, SocketConnectionDelegate {
         messagesCollectionView.scrollToBottom(animated: true)
     }
     
+    /**
+     Date to String conversion
+     */
     func convertStringTimestampToDateTimestamp(timestamp: String) -> Date {
         let dateFormatter = DateFormatter()
         dateFormatter.timeZone = NSTimeZone(abbreviation: "Australia/Melbourne") as TimeZone?
@@ -124,6 +144,10 @@ class ChatRoomController: MessagesViewController, SocketConnectionDelegate {
         return messageTimestamp
     }
     
+    
+    /**
+     Fetch all the messages for the selected room
+     */
     func fetchMessagesForTheRoom() {
         let url = Constants.SOCKET_URL + Constants.FETCH_ALL_ROOM_MESSAGES_API_ROUTE + "/" + selectedRoomDetails!.id
         let finalUrl = URL(string: url)
@@ -154,6 +178,10 @@ class ChatRoomController: MessagesViewController, SocketConnectionDelegate {
         task.resume()
     }
     
+    /**
+     Initialize `receiveNewMessage` event listener to update the mssage list
+     whenever a new message is sent in the selected room
+     */
     func initializeListenerForMessages() {
         SocketHelper.Events.receiveNewMessage.listen { [self] (data) in
             do {
@@ -178,6 +206,11 @@ class ChatRoomController: MessagesViewController, SocketConnectionDelegate {
         }
     }
     
+    /**
+     While checking if the user belongs to the selected room
+     if user's rooms are not available make an API call to fetch the use rooms
+     then check if the selected  room belongs in the user's chat rooms
+     */
     func fetchUserChatRooms() {
         indicator.startAnimating()
         let url = Constants.SOCKET_URL + Constants.FETCH_USER_ROOMS_API_ROUTE + "/" + logedInUserEmail!
@@ -225,6 +258,12 @@ class ChatRoomController: MessagesViewController, SocketConnectionDelegate {
     func connectedToSocket(isConnected: Bool) {
     }
     
+    /**
+     Generate a color for user's avatar based on its email address
+     Taken from a StackOverflow solution
+     The logged in user's avatar will have the app's primary color as the avatar color
+     this function generates colors for the other user's avatar in the room
+     */
     func generateRandomAvatarColor(id: String) -> UIColor {
         let hash = abs(id.hashValue)
         let colorNum = hash % (256*256*256)
@@ -236,6 +275,11 @@ class ChatRoomController: MessagesViewController, SocketConnectionDelegate {
     }
 }
 
+
+/**
+ Message kit delegate functions
+ The below extensions are for configuring the MessageKit layout and data source
+ */
 extension ChatRoomController: MessagesDataSource {
     func currentSender() -> SenderType {
         return Sender(senderId: user.senderId, displayName: user.name)
@@ -298,7 +342,10 @@ extension ChatRoomController: MessagesDisplayDelegate {
     }
 }
 
-
+/**
+ Take the text from the input field
+ and emit the message in the event to the server
+ */
 extension ChatRoomController: InputBarAccessoryViewDelegate {
     func inputBar(_ inputBar: InputBarAccessoryView, didPressSendButtonWith text: String) {
         if text.count > 0 {

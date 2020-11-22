@@ -7,8 +7,10 @@
 
 import UIKit
 
+/**
+ Class to manage the chat room details in list view
+ */
 class ChatRoomTableViewCell: UITableViewCell {
-    
     
     @IBOutlet weak var containerView: UIView!
     @IBOutlet weak var roomLabel: UILabel!

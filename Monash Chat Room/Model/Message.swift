@@ -5,10 +5,14 @@
 //  Created by Kshitij Pandey on 14/10/20.
 //
 
+
+
 import Foundation
 import MessageKit
 
-
+/**
+ Message structure as defined in MessageKit
+ */
 struct Message {
     let text: String
     let chatRoomId: String

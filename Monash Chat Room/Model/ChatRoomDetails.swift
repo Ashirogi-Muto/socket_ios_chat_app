@@ -7,6 +7,11 @@
 
 import Foundation
 
+
+/**
+ Struct to define the properties of individual chat rooms
+ Used in `ChatRooms`
+ */
 struct ChatRoomDetails: Decodable {
     let createdAt: String
     let createdBy: String

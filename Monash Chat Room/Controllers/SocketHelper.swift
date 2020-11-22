@@ -8,6 +8,12 @@
 import UIKit
 import SocketIO
 
+/**
+ Helper class to manage the Socket connection
+ and emit and listen to events
+ Can be used by other classes to connect to the socket,
+ set event emiiters and listeners
+ */
 class SocketHelper {
     static let shared = SocketHelper()
     var socketClient: SocketIOClient? = nil
@@ -19,7 +25,6 @@ class SocketHelper {
     
     func connectToSocket(){
         socketClient?.on(clientEvent: .connect, callback: { (data, ack) in
-            print("CONNECTED \(data)")
             self.delegate?.connectedToSocket(isConnected: true)
         })
         socketClient?.connect()
@@ -34,7 +39,6 @@ class SocketHelper {
     
     func disconnectSocket() {
         socketClient?.disconnect()
-        print("socket Disconnected")
     }
     
     enum Events {

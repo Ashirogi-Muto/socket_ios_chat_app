@@ -8,6 +8,9 @@
 import UIKit
 import CoreData
 
+/**
+ Class to manage the user chat rooms
+ */
 class UserChatRoomsTableViewController: UITableViewController, UISearchBarDelegate, UITextFieldDelegate, UISearchResultsUpdating {
     var userChatRooms: [ChatRoomDetails]?
     var filteredChatRooms: [ChatRoomDetails]?
@@ -45,19 +48,9 @@ class UserChatRoomsTableViewController: UITableViewController, UISearchBarDelega
             return 1
         }
         return 0
-//        else {
-//            let noDataLabel: UILabel  = UILabel(frame: CGRect(x: 0, y: 0, width: tableView.bounds.size.width, height: tableView.bounds.size.height))
-//            noDataLabel.text = Constants.NO_USER_CHAT_ROOM_LABEL
-//            noDataLabel.textColor = Constants.LABEL_COLOR
-//            noDataLabel.textAlignment = .center
-//            tableView.backgroundView  = noDataLabel
-//            tableView.separatorStyle  = .none
-//            return 0
-//        }
     }
     
     override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        // #warning Incomplete implementation, return the number of rows
         return filteredChatRooms!.count
     }
     
@@ -68,7 +61,6 @@ class UserChatRoomsTableViewController: UITableViewController, UISearchBarDelega
         cell.descriptionLabel?.text = filteredChatRooms![indexPath.row].tag
         
         cell.containerView.layer.cornerRadius = 10.0;
-        //cell.containerView.layer.borderWidth = 1.0;
         cell.containerView.layer.borderColor = UIColor.black.cgColor;
         cell.containerView.layer.shadowOffset = CGSize(width: 0 , height:2)
         cell.containerView.layer.shadowRadius = 5.0;
@@ -111,6 +103,9 @@ class UserChatRoomsTableViewController: UITableViewController, UISearchBarDelega
          return "Leave Room"
     }
     
+    /*
+     The user can leave the room by swiping left on the room list vie cell
+     */
     func removeUserFromRoom(id: String) {
         indicator.startAnimating()
         let url = Constants.SOCKET_URL + Constants.LEAVE_ROOM_API_ROUTE + "/" + id

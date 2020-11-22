@@ -7,6 +7,9 @@
 
 import UIKit
 
+/**
+ Class to manage creation of new rooms
+ */
 class AddNewRoomViewController: UIViewController {
     
     @IBOutlet weak var roomNameInput: UITextField!
@@ -26,7 +29,7 @@ class AddNewRoomViewController: UIViewController {
     }
     
     @IBAction func addNewRoomAction(_ sender: Any) {
-        validationUIReset()
+        resetInputFieldToDefault()
         let validation = inputValidation()
         if validation == true{
             indicator.startAnimating()
@@ -45,6 +48,9 @@ class AddNewRoomViewController: UIViewController {
         }
     }
     
+    /**
+     Send the API call to create a new room
+     */
     func createNewRoom(inputParameters: String){
         let urlString = Constants.SOCKET_URL + Constants.ADD_NEW_ROOM_API_ROUTE
         
@@ -82,6 +88,9 @@ class AddNewRoomViewController: UIViewController {
         task.resume()
     }
     
+    /**
+     Validate the input fields
+     */
     func inputValidation () -> Bool{
         let roomNameErrorMessage = "Please enter a name!"
         let roomTagErrorMessage = "Please enter a tag!"
@@ -93,27 +102,27 @@ class AddNewRoomViewController: UIViewController {
         let regex = try! NSRegularExpression(pattern: "[^A-Za-z0-9\\s]")
         if trimmedRoomName!.count < 1 {
             validation = false
-            validationUI(inputField: roomNameInput,messageLabel: nameErrorMessageLabel,message: roomNameErrorMessage )
+            changeInputFieldStyle(inputField: roomNameInput,messageLabel: nameErrorMessageLabel,message: roomNameErrorMessage )
         }
         if trimmedRoomTag!.count < 1 {
             validation = false
-            validationUI(inputField: roomTagInput,messageLabel: tagErrorMessageLabel,message: roomTagErrorMessage )
+            changeInputFieldStyle(inputField: roomTagInput,messageLabel: tagErrorMessageLabel,message: roomTagErrorMessage )
         }
         
         if trimmedRoomName!.count > 1 && regex.firstMatch(in: trimmedRoomName!, options: [], range: rangeRoomName) != nil {
             validation = false
-            validationUI(inputField: roomNameInput,messageLabel: nameErrorMessageLabel,message: roomNameErrorMessage )
+            changeInputFieldStyle(inputField: roomNameInput,messageLabel: nameErrorMessageLabel,message: roomNameErrorMessage )
         }
         
         if trimmedRoomTag!.count > 1 && regex.firstMatch(in: trimmedRoomTag!, options: [], range: rangeRoomTag) != nil   {
             validation = false
-            validationUI(inputField: roomTagInput,messageLabel: tagErrorMessageLabel,message: roomTagErrorMessage )
+            changeInputFieldStyle(inputField: roomTagInput,messageLabel: tagErrorMessageLabel,message: roomTagErrorMessage )
         }
         return validation
     }
     
     
-    // alert message for the save exhibition if the information is not valid.
+    // alert message
     func popUpMessage (message: String){
         let alertMessage = UIAlertController(title: "Alert", message: message, preferredStyle: UIAlertController.Style.alert)
         alertMessage.addAction(UIAlertAction(title: "OK", style: UIAlertAction.Style.default, handler: nil))
@@ -126,16 +135,20 @@ class AddNewRoomViewController: UIViewController {
         self.addNewRoomButton.isEnabled = true
     }
     
-    // This is validation UI
-    func validationUI(inputField: UITextField!, messageLabel: UILabel!, message: String){
+    /**
+     This function changes the input field UI is validation fails
+     */
+    func changeInputFieldStyle(inputField: UITextField!, messageLabel: UILabel!, message: String){
         inputField.layer.borderColor = UIColor.orange.cgColor
         inputField.layer.borderWidth = 1.0
         messageLabel.isHidden = false
         messageLabel.text = message
     }
     
-    // This is validation UI reset
-    func validationUIReset(){
+    /**
+     This function resets the input field UI to default
+     */
+    func resetInputFieldToDefault(){
         roomNameInput.backgroundColor = UIColor.white
         roomNameInput.layer.borderColor = UIColor.systemGray5.cgColor
         roomNameInput.layer.cornerRadius = 5.0

@@ -7,6 +7,10 @@
 
 import Foundation
 
+/**
+ Protocol to let other classes know that Socket connection was
+ successfull or not
+ */
 protocol SocketConnectionDelegate {
     func connectedToSocket(isConnected: Bool)
 }

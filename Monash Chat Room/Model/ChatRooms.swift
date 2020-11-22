@@ -7,6 +7,9 @@
 
 import Foundation
 
+/**
+ Decodable struct to extract the chat rooms from the API call
+ */
 struct ChatRooms: Decodable {
     let userId: String?
     let rooms: [ChatRoomDetails]

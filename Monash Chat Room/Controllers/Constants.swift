@@ -27,7 +27,6 @@ struct Constants {
     static let NO_USER_CHAT_ROOM_LABEL = "Looks like you are not a part of any chat room"
     static let NO_ROOMS_LABEL = "Looks like there are no rooms yet! Go ahead and create one"
     static var PRIMARY_APP_COLOR: UIColor { return UIColor(red: 1.00, green: 0.40, blue: 0.14, alpha: 1.00) }
-//    static let SOCKET_URL = "http://localhost:3000"
     static let SOCKET_URL = "http://ec2-52-70-46-179.compute-1.amazonaws.com:3000"
     static let USER_CHAT_ROOMS_CELL_VIEW_IDENTIFIER = "chatRoomCellView"
     static let USER_CHAT_ROOMS_TO_CHAT_ROOM_SEGUE_IDENTIFIER = "userChatRoomsToChatRoomSegue"

@@ -24,10 +24,13 @@ class AppDelegate: UIResponder, UIApplicationDelegate, SocketConnectionDelegate,
                 print("User has declined notifications")
             }
         }
+        
+        //Initialize Socket connection
         notificationCenter.delegate = self
         let socketHelper = SocketHelper()
         socketHelper.delegate = self
         socketHelper.connectToSocket()
+        //Set the Google client ID
         GIDSignIn.sharedInstance().clientID = "614194330751-j845em5duqf98sekljsc48vtjoioqrln.apps.googleusercontent.com"
         let userDefault = UserDefaults.standard
         loggedInUserEmail = userDefault.string(forKey: Constants.LOGGED_IN_USER_EMAIL_KEY)
@@ -51,7 +54,6 @@ class AppDelegate: UIResponder, UIApplicationDelegate, SocketConnectionDelegate,
     
     func userNotificationCenter(_ center: UNUserNotificationCenter, didReceive response: UNNotificationResponse, withCompletionHandler completionHandler: @escaping () -> Void) {
         UIApplication.shared.applicationIconBadgeNumber = 0
-        let chatRoomId = response.notification.request.content.categoryIdentifier
         completionHandler()
     }
     
@@ -70,17 +72,18 @@ class AppDelegate: UIResponder, UIApplicationDelegate, SocketConnectionDelegate,
     }
     
     //MARK INCOMING MESSAGE NOTIFICATIONS
-    
     func connectedToSocket(isConnected: Bool) {
         initializeListenerForNotifications()
     }
-    
+    //Check for incoming messages and send notification to the user
     func initializeListenerForNotifications() {
         SocketHelper.Events.receiveNewMessage.listen { [self] (data) in
             do {
                 if let arr = data as? [[String: Any]] {
                     let messageDataJson = try JSONSerialization.data(withJSONObject: arr[0])
                     let message = try JSONDecoder().decode(MessageDetails.self, from: messageDataJson)
+                    //only send the notification if sender is not current user and the
+                    //user belongs in the room
                     if message.senderId != loggedInUserEmail && ((userRoomIds?.contains(message.chatRoomId)) != nil) {
                         self.sendNotification(chatRoomId: message.chatRoomId)
                     }
@@ -92,6 +95,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate, SocketConnectionDelegate,
         }
     }
     
+    //UNMutableNotificationContent notification
     func sendNotification(chatRoomId: String) {
         let content = UNMutableNotificationContent()
         content.title = "Hello"
